@@ -1,7 +1,9 @@
-package com.io.tatsuki.randomer;
+package com.io.tatsuki.randomer.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.io.tatsuki.randomer.R;
 
 public class HomeActivity extends AppCompatActivity {
 
