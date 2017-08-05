@@ -7,6 +7,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.ViewModels.HomeViewModel;
@@ -17,8 +21,8 @@ import com.io.tatsuki.randomer.databinding.ActivityHomeBinding;
  */
 public class HomeActivity extends AppCompatActivity {
 
-    private ActivityHomeBinding binding;
-    private HomeViewModel homeViewModel;
+    private ActivityHomeBinding mBinding;
+    private HomeViewModel mHomeViewModel;
 
     /**
      * 画面遷移のためのIntent発行
@@ -33,12 +37,32 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_home);
 
-        homeViewModel = new HomeViewModel();
-        binding.setHomeViewModel(homeViewModel);
+        mHomeViewModel = new HomeViewModel();
+        mBinding.setHomeViewModel(mHomeViewModel);
 
         setViews();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu, menu);
+
+        // SearchView
+        SearchView mSearchView = (SearchView) mBinding.activityHomeToolbar.getMenu().findItem(R.id.menu_action_search).getActionView();
+        mSearchView.setOnQueryTextListener(mHomeViewModel.queryTextListener);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_action_search:
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -46,14 +70,16 @@ public class HomeActivity extends AppCompatActivity {
      */
     private void setViews() {
         // Toolbar
-        setSupportActionBar(binding.activityHomeToolbar);
+        setSupportActionBar(mBinding.activityHomeToolbar);
+
         // NavigationDrawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
-                                                                 binding.activityHomeDrawerLayout,
-                                                                 binding.activityHomeToolbar,
+                                                               mBinding.activityHomeDrawerLayout,
+                                                                 mBinding.activityHomeToolbar,
                                                                  R.string.app_name,
                                                                  R.string.app_name);
-        binding.activityHomeDrawerLayout.addDrawerListener(toggle);
+        mBinding.activityHomeDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        mBinding.activityHomeNavigation.setNavigationItemSelectedListener(mHomeViewModel.selectedListener);
     }
 }
