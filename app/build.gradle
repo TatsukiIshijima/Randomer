@@ -34,5 +34,6 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'org.greenrobot:greendao:3.2.2'
+    provided 'org.projectlombok:lombok:1.16.18'
     testCompile 'junit:junit:4.12'
 }
