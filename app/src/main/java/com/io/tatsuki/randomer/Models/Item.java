@@ -9,7 +9,7 @@ import lombok.Setter;
  */
 
 @NoArgsConstructor
-public class item {
+public class Item {
 
     @Setter
     @Getter
@@ -30,5 +30,9 @@ public class item {
     @Setter
     @Getter
     private String url;
+
+    @Setter
+    @Getter
+    private String imagePath;
 
 }
