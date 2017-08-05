@@ -6,9 +6,12 @@ import com.io.tatsuki.randomer.Models.Item;
 
 import java.util.ArrayList;
 
+import lombok.NoArgsConstructor;
+
 /**
  * Item View Model
  */
+@NoArgsConstructor
 public class ItemViewModel {
 
     private static final String TAG = ItemViewModel.class.getSimpleName();
@@ -25,6 +28,6 @@ public class ItemViewModel {
      * @param item
      */
     public void setItemTitle(Item item) {
-        title.set(item.getTitle());
+        title.set(item.getMTitle());
     }
 }

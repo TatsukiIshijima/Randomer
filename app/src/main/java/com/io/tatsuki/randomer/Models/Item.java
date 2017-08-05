@@ -13,26 +13,26 @@ public class Item {
 
     @Setter
     @Getter
-    private String category;
+    private String mCategory;
 
     @Setter
     @Getter
-    private String title;
+    private String mTitle;
 
     @Setter
     @Getter
-    private String userId;
+    private String mUserId;
 
     @Setter
     @Getter
-    private String password;
+    private String mPassword;
 
     @Setter
     @Getter
-    private String url;
+    private String mUrl;
 
     @Setter
     @Getter
-    private String imagePath;
+    private String mImagePath;
 
 }
