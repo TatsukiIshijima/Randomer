@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_action_all_search"
+        android:title="全検索">
+    </item>
 
+    <item
+        android:id="@+id/menu_action_category_search"
+        android:title="カテゴリー検索">
+    </item>
 </menu>
