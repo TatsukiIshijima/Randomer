@@ -163,7 +163,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
-                                android:text="TITLE"
+                                android:text="@{detailViewModel.mTitle}"
                                 android:textStyle="bold"
                                 android:maxLines="1"
                                 android:ellipsize="end"/>
@@ -181,7 +181,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
-                                android:text="USER ID"
+                                android:text="@{detailViewModel.mUserId}"
                                 android:textStyle="bold"
                                 android:maxLines="1"
                                 android:ellipsize="end"/>
@@ -199,7 +199,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
-                                android:text="PASSWORD"
+                                android:text="@{detailViewModel.mPassword}"
                                 android:textStyle="bold"
                                 android:inputType="textVisiblePassword"
                                 android:maxLines="1"
@@ -218,7 +218,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
-                                android:text="URL"
+                                android:text="@{detailViewModel.mUrl}"
                                 android:textStyle="bold"
                                 android:inputType="textUri"
                                 android:maxLines="1"
@@ -241,14 +241,16 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="8dp"
-                        android:text="編集"/>
+                        android:text="編集"
+                        android:onClick="@{detailViewModel::onClickButton}"/>
 
                     <Button
                         android:id="@+id/activity_detail_delete_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="削除"/>
+                        android:text="削除"
+                        android:onClick="@{detailViewModel::onClickButton}"/>
 
                 </LinearLayout>
 
