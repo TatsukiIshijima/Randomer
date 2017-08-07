@@ -7,14 +7,19 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.io.tatsuki.randomer.Adapters.ItemAdapter;
+import com.io.tatsuki.randomer.Models.Item;
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.ViewModels.HomeViewModel;
 import com.io.tatsuki.randomer.databinding.ActivityHomeBinding;
+
+import java.util.ArrayList;
 
 /**
  *  ホーム画面
@@ -43,6 +48,7 @@ public class HomeActivity extends AppCompatActivity {
         mBinding.setHomeViewModel(mHomeViewModel);
 
         setViews();
+        setListAndAdapter();
     }
 
     @Override
@@ -81,5 +87,22 @@ public class HomeActivity extends AppCompatActivity {
         mBinding.activityHomeDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         mBinding.activityHomeNavigation.setNavigationItemSelectedListener(mHomeViewModel.selectedListener);
+    }
+
+    /**
+     * リスト表示の設定
+     */
+    private void setListAndAdapter() {
+        // ダミーデータ
+        ArrayList<Item> items = new ArrayList<>();
+        for (int i=0; i < 20; i++) {
+            Item item = new Item();
+            item.setMTitle("Title" + i);
+            items.add(item);
+        }
+
+        mBinding.activityHomeRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        ItemAdapter mItemAdapter = new ItemAdapter(getApplicationContext(), items);
+        mBinding.activityHomeRecyclerView.setAdapter(mItemAdapter);
     }
 }
