@@ -1,5 +1,7 @@
 package com.io.tatsuki.randomer.Models;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +11,7 @@ import lombok.Setter;
  */
 
 @NoArgsConstructor
-public class Item {
+public class Item implements Serializable {
 
     @Setter
     @Getter
