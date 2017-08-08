@@ -241,6 +241,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="8dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:background="@drawable/custom_button_style"
                         android:text="編集"
                         android:onClick="@{detailViewModel::onClickButton}"/>
 
@@ -249,6 +251,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="8dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:background="@drawable/custom_button_style"
                         android:text="削除"
                         android:onClick="@{detailViewModel::onClickButton}"/>
 
