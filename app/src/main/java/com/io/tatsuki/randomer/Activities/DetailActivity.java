@@ -1,6 +1,7 @@
 package com.io.tatsuki.randomer.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
@@ -25,12 +26,13 @@ public class DetailActivity extends AppCompatActivity {
 
     /**
      * 画面遷移のためのIntent発行
-     * @param activity
+     * @param context
      * @param item
      * @return intent
      */
-    public static Intent detailIntent(@NonNull Activity activity, Item item) {
-        Intent intent = new Intent(activity, DetailActivity.class);
+    public static Intent detailIntent(@NonNull Context context, Item item) {
+        Intent intent = new Intent(context, DetailActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle args = new Bundle();
         args.putSerializable(ITEM_KEY, item);
         intent.putExtras(args);

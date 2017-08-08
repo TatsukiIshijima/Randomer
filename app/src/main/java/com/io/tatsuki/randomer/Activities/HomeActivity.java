@@ -1,6 +1,7 @@
 package com.io.tatsuki.randomer.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
@@ -31,11 +32,11 @@ public class HomeActivity extends AppCompatActivity {
 
     /**
      * 画面遷移のためのIntent発行
-     * @param activity
+     * @param context
      * @return intent
      */
-    public static Intent homeIntent(@NonNull Activity activity) {
-        Intent intent = new Intent(activity, HomeActivity.class);
+    public static Intent homeIntent(@NonNull Context context) {
+        Intent intent = new Intent(context, HomeActivity.class);
         return intent;
     }
 

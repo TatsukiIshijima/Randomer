@@ -1,5 +1,6 @@
 package com.io.tatsuki.randomer.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.io.tatsuki.randomer.Activities.DetailActivity;
 import com.io.tatsuki.randomer.Models.Item;
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.ViewModels.ItemViewModel;
@@ -44,8 +46,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        Item item = getItemAt(holder.getLayoutPosition());
+        final Item item = getItemAt(holder.getLayoutPosition());
         holder.loadModel(item);
+        // クリックイベント
+        mBinding.getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 詳細画面に遷移
+                mContext.startActivity(DetailActivity.detailIntent(mContext, item));
+            }
+        });
     }
 
     @Override
