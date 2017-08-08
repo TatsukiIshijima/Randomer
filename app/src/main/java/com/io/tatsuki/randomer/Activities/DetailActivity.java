@@ -48,6 +48,7 @@ public class DetailActivity extends AppCompatActivity {
         mBinding.setDetailViewModel(mDetailViewModel);
 
         setViews();
+        setValue();
     }
 
     /**
@@ -56,5 +57,18 @@ public class DetailActivity extends AppCompatActivity {
     private void setViews() {
         // Toolbar
         setSupportActionBar(mBinding.activityDetailToolbar);
+    }
+
+    /**
+     * 遷移後の受け取った各値の設定
+     */
+    private void setValue() {
+        Bundle bundle = getIntent().getExtras();
+        Item item = (Item) bundle.getSerializable(ITEM_KEY);
+        mDetailViewModel.setTitle(item.getMTitle());
+        mDetailViewModel.setUserId(item.getMUserId());
+        mDetailViewModel.setPassword(item.getMPassword());
+        mDetailViewModel.setUrl(item.getMUrl());
+        mBinding.activityDetailToolbar.setTitle(item.getMCategory());
     }
 }

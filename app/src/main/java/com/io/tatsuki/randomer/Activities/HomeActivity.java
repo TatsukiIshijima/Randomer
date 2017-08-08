@@ -98,7 +98,11 @@ public class HomeActivity extends AppCompatActivity {
         ArrayList<Item> items = new ArrayList<>();
         for (int i=0; i < 20; i++) {
             Item item = new Item();
-            item.setMTitle("Title" + i);
+            item.setMCategory("Category " + i);
+            item.setMTitle("Title " + i);
+            item.setMUserId("UserID " + i);
+            item.setMPassword("Password " + i);
+            item.setMUrl("http://www.hogehoge/0" + i);
             items.add(item);
         }
 

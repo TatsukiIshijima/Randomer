@@ -46,6 +46,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
+        holder.setIsRecyclable(false);
         final Item item = getItemAt(holder.getLayoutPosition());
         holder.loadModel(item);
         // クリックイベント
