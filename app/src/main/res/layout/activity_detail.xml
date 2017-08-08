@@ -164,7 +164,7 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
                                 android:text="@{detailViewModel.mTitle}"
-                                android:textStyle="bold"
+                                android:textSize="20sp"
                                 android:maxLines="1"
                                 android:ellipsize="end"/>
                         </LinearLayout>
@@ -182,7 +182,7 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
                                 android:text="@{detailViewModel.mUserId}"
-                                android:textStyle="bold"
+                                android:textSize="20sp"
                                 android:maxLines="1"
                                 android:ellipsize="end"/>
                         </LinearLayout>
@@ -206,8 +206,8 @@
                                     android:layout_weight="0.8"
                                     android:gravity="center_vertical"
                                     android:text="@{detailViewModel.mPassword}"
-                                    android:textStyle="bold"
-                                    android:inputType="textVisiblePassword"
+                                    android:textSize="20sp"
+                                    android:inputType="textPassword"
                                     android:maxLines="1"
                                     android:ellipsize="end"/>
 
@@ -235,7 +235,7 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
                                 android:text="@{detailViewModel.mUrl}"
-                                android:textStyle="bold"
+                                android:textSize="20sp"
                                 android:inputType="textUri"
                                 android:maxLines="1"
                                 android:ellipsize="end"/>
@@ -249,14 +249,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginTop="32dp">
+                    android:layout_marginTop="48dp">
 
                     <Button
                         android:id="@+id/activity_detail_edit_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginBottom="32dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:background="@drawable/custom_button_style"
                         android:text="編集"
@@ -267,7 +269,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:background="@drawable/custom_button_style"
                         android:text="削除"

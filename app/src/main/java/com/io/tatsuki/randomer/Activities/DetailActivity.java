@@ -69,6 +69,7 @@ public class DetailActivity extends AppCompatActivity {
         mDetailViewModel.setUserId(item.getMUserId());
         mDetailViewModel.setPassword(item.getMPassword());
         mDetailViewModel.setUrl(item.getMUrl());
+        // TODO:以下が反映されない
         mBinding.activityDetailToolbar.setTitle(item.getMCategory());
     }
 }
