@@ -339,7 +339,8 @@
                         <ToggleButton
                             android:id="@+id/activity_register_number_toggle"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:checked="@={registerViewModel.mNumberToggle}"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -358,7 +359,8 @@
                         <ToggleButton
                             android:id="@+id/activity_register_upper_toggle"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:checked="@={registerViewModel.mUpperToggle}"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -377,7 +379,8 @@
                         <ToggleButton
                             android:id="@+id/activity_register_lower_toggle"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:checked="@={registerViewModel.mLowerToggle}"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -396,7 +399,8 @@
                         <ToggleButton
                             android:id="@+id/activity_register_symbol_toggle"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:checked="@={registerViewModel.mSymbolToggle}"/>
 
                         <TextView
                             android:layout_width="wrap_content"

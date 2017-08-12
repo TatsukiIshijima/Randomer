@@ -1,5 +1,6 @@
 package com.io.tatsuki.randomer.ViewModels;
 
+import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.util.Log;
@@ -22,6 +23,10 @@ public class RegisterViewModel {
     public ObservableField<String> mUrl = new ObservableField<>();
     public ObservableField<String > mPasswordLengthTitle = new ObservableField<>();
     public ObservableInt mPasswordLength = new ObservableInt();
+    public ObservableBoolean mNumberToggle = new ObservableBoolean();
+    public ObservableBoolean mUpperToggle = new ObservableBoolean();
+    public ObservableBoolean mLowerToggle = new ObservableBoolean();
+    public ObservableBoolean mSymbolToggle = new ObservableBoolean();
 
     public void setCategory(String category) {
         mCategory.set(category);
@@ -71,6 +76,16 @@ public class RegisterViewModel {
             // 生成ボタン
             case R.id.activity_register_generate_button:
                 Log.d(TAG, "Generate Button Clicked");
+                /* データバインディングテスト
+                Log.d(TAG,
+                                mTitle.get() + "\n" +
+                                mUserId.get() + "\n" +
+                                mPassword.get() + " : " + mPasswordLength.get() + "\n" +
+                                mNumberToggle.get() + "\n" +
+                                mUpperToggle.get() + "\n" +
+                                mLowerToggle.get() + "\n" +
+                                mSymbolToggle.get());
+                */
                 break;
             // 保存ボタン
             case R.id.activity_register_save_button:
