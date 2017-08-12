@@ -4,8 +4,12 @@ import android.databinding.ObservableField;
 import android.util.Log;
 import android.view.View;
 
+import com.io.tatsuki.randomer.Activities.RegisterActivity;
+import com.io.tatsuki.randomer.Events.TransitionEvent;
 import com.io.tatsuki.randomer.Models.Item;
 import com.io.tatsuki.randomer.R;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * 詳細画面 ViewModel
@@ -45,10 +49,13 @@ public class DetailViewModel {
             // 編集ボタン
             case R.id.activity_detail_edit_button:
                 Log.d(TAG, "Edit Button Clicked");
+                // 登録画面に遷移
+                EventBus.getDefault().post(new TransitionEvent(TransitionEvent.TRANS_TO_REGISTER_FLAG));
                 break;
             // 削除ボタン
             case R.id.activity_detail_delete_button:
                 Log.d(TAG, "Delete Button Clicked");
+                // ホーム画面に遷移（ActivityForResult?）
                 break;
         }
     }

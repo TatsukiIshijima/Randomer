@@ -7,7 +7,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.io.tatsuki.randomer.Events.TransitionEvent;
 import com.io.tatsuki.randomer.R;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * ホーム画面のViewModel
@@ -26,6 +29,8 @@ public class HomeViewModel {
             // Floating Action Button
             case R.id.activity_home_fb:
                 Log.d(TAG, "Floating Action Button Clicked");
+                // 登録画面遷移
+                EventBus.getDefault().post(new TransitionEvent(TransitionEvent.TRANS_TO_REGISTER_FLAG));
                 break;
             default:
                 break;

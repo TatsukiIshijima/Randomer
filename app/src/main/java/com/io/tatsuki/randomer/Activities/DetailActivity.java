@@ -8,10 +8,14 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.io.tatsuki.randomer.Events.TransitionEvent;
 import com.io.tatsuki.randomer.Models.Item;
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.ViewModels.DetailViewModel;
 import com.io.tatsuki.randomer.databinding.ActivityDetailBinding;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * 詳細画面
@@ -51,6 +55,23 @@ public class DetailActivity extends AppCompatActivity {
         setValue();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
     /**
      * 各Viewの設定
      */
@@ -71,5 +92,21 @@ public class DetailActivity extends AppCompatActivity {
         mDetailViewModel.setUrl(item.getMUrl());
         // TODO:以下が反映されない
         mBinding.activityDetailToolbar.setTitle(item.getMCategory());
+    }
+
+    /**
+     * 画面遷移のためのイベント講読
+     * @param event
+     */
+    @Subscribe
+    public void subScribeTransitionEvent(TransitionEvent event) {
+        switch (event.getTransitionFlag()) {
+            case TransitionEvent.TRANS_TO_REGISTER_FLAG:
+                Intent intent = RegisterActivity.registerIntent(this);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 }
