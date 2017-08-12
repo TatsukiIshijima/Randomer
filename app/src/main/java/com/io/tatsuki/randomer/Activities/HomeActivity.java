@@ -15,10 +15,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.io.tatsuki.randomer.Adapters.ItemAdapter;
+import com.io.tatsuki.randomer.Events.TransitionEvent;
 import com.io.tatsuki.randomer.Models.Item;
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.ViewModels.HomeViewModel;
 import com.io.tatsuki.randomer.databinding.ActivityHomeBinding;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
@@ -53,13 +57,25 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu, menu);
 
         // SearchView
         SearchView mSearchView = (SearchView) mBinding.activityHomeToolbar.getMenu().findItem(R.id.menu_action_search).getActionView();
-        mSearchView.setOnQueryTextListener(mHomeViewModel.queryTextListener);
+        mSearchView.setOnQueryTextListener(mHomeViewModel.queryTextListener());
         return true;
     }
 
@@ -87,7 +103,7 @@ public class HomeActivity extends AppCompatActivity {
                                                                  R.string.app_name);
         mBinding.activityHomeDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        mBinding.activityHomeNavigation.setNavigationItemSelectedListener(mHomeViewModel.selectedListener);
+        mBinding.activityHomeNavigation.setNavigationItemSelectedListener(mHomeViewModel.itemSelectedListener());
     }
 
     /**
@@ -109,5 +125,21 @@ public class HomeActivity extends AppCompatActivity {
         mBinding.activityHomeRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         ItemAdapter mItemAdapter = new ItemAdapter(getApplicationContext(), items);
         mBinding.activityHomeRecyclerView.setAdapter(mItemAdapter);
+    }
+
+    /**
+     * 画面遷移のためのイベント講読
+     * @param event
+     */
+    @Subscribe
+    public void subScribeTransitionEvent(TransitionEvent event) {
+        switch (event.getTransitionFlag()) {
+            case TransitionEvent.TRANS_TO_REGISTER_FLAG:
+                Intent intent = RegisterActivity.registerIntent(this);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 }

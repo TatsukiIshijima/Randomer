@@ -7,7 +7,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.io.tatsuki.randomer.Events.TransitionEvent;
 import com.io.tatsuki.randomer.R;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * ホーム画面のViewModel
@@ -26,6 +29,8 @@ public class HomeViewModel {
             // Floating Action Button
             case R.id.activity_home_fb:
                 Log.d(TAG, "Floating Action Button Clicked");
+                // 登録画面遷移
+                EventBus.getDefault().post(new TransitionEvent(TransitionEvent.TRANS_TO_REGISTER_FLAG));
                 break;
             default:
                 break;
@@ -35,27 +40,34 @@ public class HomeViewModel {
     /**
      * 検索テキストイベント
      */
-    public SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
-        @Override
-        public boolean onQueryTextSubmit(String query) {
-            Log.d(TAG, "onQueryTextSubmit : " + query);
-            return false;
-        }
+    public SearchView.OnQueryTextListener queryTextListener() {
+        SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d(TAG, "onQueryTextSubmit : " + query);
+                return false;
+            }
 
-        @Override
-        public boolean onQueryTextChange(String newText) {
-            Log.d(TAG, "onQueryTextChange : " + newText);
-            return false;
-        }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.d(TAG, "onQueryTextChange : " + newText);
+                return false;
+            }
+        };
+        return queryTextListener;
     };
 
     /**
      * ナビゲーション内メニューイベント
      */
-    public NavigationView.OnNavigationItemSelectedListener selectedListener = new NavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            return false;
-        }
-    };
+    public NavigationView.OnNavigationItemSelectedListener itemSelectedListener() {
+        NavigationView.OnNavigationItemSelectedListener itemSelectedListener = new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                return false;
+            }
+        };
+        return itemSelectedListener;
+    }
+
 }
