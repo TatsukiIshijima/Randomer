@@ -441,7 +441,6 @@
                         android:layout_marginBottom="32dp"
                         android:background="@drawable/custom_button_style"
                         android:text="保存"
-                        android:enabled="@{registerViewModel.saveButtonEnabled}"
                         android:onClick="@{registerViewModel::onClickButton}"/>
 
                 </LinearLayout>

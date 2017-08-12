@@ -3,10 +3,16 @@ package com.io.tatsuki.randomer.ViewModels;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
+import com.io.tatsuki.randomer.Events.ButtonEnableEvent;
 import com.io.tatsuki.randomer.R;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * 登録画面のViewModel
@@ -56,11 +62,11 @@ public class RegisterViewModel {
      * 保存ボタンの活性・非活性の切り替え
      * @return
      */
-    public boolean getSaveButtonEnabled() {
+    private void getSaveButtonEnabled() {
         if (mTitle.get() != null && mUserId.get() != null && mPassword.get() != null) {
-            return true;
+            EventBus.getDefault().post(new ButtonEnableEvent(true));
         } else {
-            return false;
+            EventBus.getDefault().post(new ButtonEnableEvent(false));
         }
     }
 
@@ -94,5 +100,30 @@ public class RegisterViewModel {
             default:
                 break;
         }
+    }
+
+    /**
+     * EditTextの編集イベント
+     * @return
+     */
+    public TextWatcher textChangeLister() {
+        TextWatcher textWatcher = new TextWatcher() {
+            // 変更前
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+
+            }
+            // 変更中
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                getSaveButtonEnabled();
+            }
+            // 変更後
+            @Override
+            public void afterTextChanged(Editable editable) {
+                getSaveButtonEnabled();
+            }
+        };
+        return textWatcher;
     }
 }

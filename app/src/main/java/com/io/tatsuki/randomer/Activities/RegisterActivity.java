@@ -8,10 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 
+import com.io.tatsuki.randomer.Events.ButtonEnableEvent;
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.Utils.KeyboardUtil;
 import com.io.tatsuki.randomer.ViewModels.RegisterViewModel;
 import com.io.tatsuki.randomer.databinding.ActivityRegisterBinding;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * 登録画面
@@ -45,11 +49,13 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -63,5 +69,18 @@ public class RegisterActivity extends AppCompatActivity {
     private void setViews() {
         // Toolbar
         setSupportActionBar(mBinding.activityRegisterToolbar);
+        // EditText
+        mBinding.activityRegisterTitleEdit.addTextChangedListener(mRegisterViewModel.textChangeLister());
+        mBinding.activityRegisterUserIdEdit.addTextChangedListener(mRegisterViewModel.textChangeLister());
+        mBinding.activityRegisterPasswordEdit.addTextChangedListener(mRegisterViewModel.textChangeLister());
+    }
+
+    /**
+     * ボタンの活性・非活性のイベント講読
+     * @param event
+     */
+    @Subscribe
+    public void subScribeButtonEnableEvent(ButtonEnableEvent event) {
+        mBinding.activityRegisterSaveButton.setEnabled(event.isButtonFlag());
     }
 }
