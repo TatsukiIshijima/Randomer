@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.io.tatsuki.randomer.Events.ButtonEnableEvent;
@@ -21,6 +22,8 @@ import org.greenrobot.eventbus.Subscribe;
  * 登録画面
  */
 public class RegisterActivity extends AppCompatActivity {
+
+    private static final String TAG = RegisterActivity.class.getSimpleName();
 
     private ActivityRegisterBinding mBinding;
     private RegisterViewModel mRegisterViewModel;
@@ -44,6 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         mBinding.setRegisterViewModel(mRegisterViewModel);
 
         setViews();
+        initButtonState();
     }
 
     @Override
@@ -69,10 +73,23 @@ public class RegisterActivity extends AppCompatActivity {
     private void setViews() {
         // Toolbar
         setSupportActionBar(mBinding.activityRegisterToolbar);
+        // SeekBar
+        mRegisterViewModel.setPasswordLength(8);
+        mRegisterViewModel.setPasswordLengthTitle();
+        // データバインディングを実行しないとリスナーがセットされない
+        mBinding.executePendingBindings();
+        mBinding.activityRegisterSeekbar.setOnSeekBarChangeListener(mRegisterViewModel.seekBarChangeListener());
         // EditText
         mBinding.activityRegisterTitleEdit.addTextChangedListener(mRegisterViewModel.textChangeLister());
         mBinding.activityRegisterUserIdEdit.addTextChangedListener(mRegisterViewModel.textChangeLister());
         mBinding.activityRegisterPasswordEdit.addTextChangedListener(mRegisterViewModel.textChangeLister());
+    }
+
+    /**
+     * ボタンの初期化
+     */
+    private void initButtonState() {
+        mBinding.activityRegisterSaveButton.setEnabled(false);
     }
 
     /**

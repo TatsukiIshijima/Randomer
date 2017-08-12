@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.SeekBar;
 
 import com.io.tatsuki.randomer.Events.ButtonEnableEvent;
 import com.io.tatsuki.randomer.R;
@@ -52,6 +53,10 @@ public class RegisterViewModel {
 
     public void setUrl(String url) {
         mUrl.set(url);
+    }
+
+    public void setPasswordLength(int length) {
+        mPasswordLength.set(length);
     }
 
     public void setPasswordLengthTitle() {
@@ -125,5 +130,34 @@ public class RegisterViewModel {
             }
         };
         return textWatcher;
+    }
+
+    /**
+     * SeekBarのイベント
+     * @return
+     */
+    public SeekBar.OnSeekBarChangeListener seekBarChangeListener() {
+        SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+            // ドラック中
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                Log.d(TAG, "onProgressChanged");
+                setPasswordLength(i);
+                setPasswordLengthTitle();
+            }
+            // タップ時
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                Log.d(TAG, "onStartTrackingTouch");
+                setPasswordLengthTitle();
+            }
+            // タップ終了時
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                Log.d(TAG, "onStopTrackingTouch");
+                setPasswordLengthTitle();
+            }
+        };
+        return seekBarChangeListener;
     }
 }
