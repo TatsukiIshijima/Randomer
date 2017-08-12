@@ -46,11 +46,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        holder.setIsRecyclable(false);
         final Item item = getItemAt(holder.getLayoutPosition());
         holder.loadModel(item);
         // クリックイベント
-        mBinding.getRoot().setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // 詳細画面に遷移
@@ -61,10 +60,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     @Override
     public int getItemCount() {
-        if (mItems == null) {
-            return 0;
-        } else {
+        if (mItems != null) {
             return mItems.size();
+        } else {
+            return 0;
         }
     }
 
