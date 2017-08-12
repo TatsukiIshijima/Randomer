@@ -75,7 +75,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // SearchView
         SearchView mSearchView = (SearchView) mBinding.activityHomeToolbar.getMenu().findItem(R.id.menu_action_search).getActionView();
-        mSearchView.setOnQueryTextListener(mHomeViewModel.queryTextListener);
+        mSearchView.setOnQueryTextListener(mHomeViewModel.queryTextListener());
         return true;
     }
 
@@ -103,7 +103,7 @@ public class HomeActivity extends AppCompatActivity {
                                                                  R.string.app_name);
         mBinding.activityHomeDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        mBinding.activityHomeNavigation.setNavigationItemSelectedListener(mHomeViewModel.selectedListener);
+        mBinding.activityHomeNavigation.setNavigationItemSelectedListener(mHomeViewModel.itemSelectedListener());
     }
 
     /**
