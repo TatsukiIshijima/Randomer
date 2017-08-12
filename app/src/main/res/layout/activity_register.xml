@@ -196,7 +196,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="0.3"
-                                android:text="追加"/>
+                                android:text="追加"
+                                android:onClick="@{registerViewModel::onClickButton}"/>
 
                         </LinearLayout>
 
@@ -218,7 +219,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:hint="＊入力必須"
-                                    android:inputType="text"/>
+                                    android:inputType="text"
+                                    android:text="@={registerViewModel.mTitle}"/>
                             </android.support.design.widget.TextInputLayout>
 
                         </LinearLayout>
@@ -241,7 +243,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:hint="＊入力必須"
-                                    android:inputType="text"/>
+                                    android:inputType="text"
+                                    android:text="@={registerViewModel.mUserId}"/>
                             </android.support.design.widget.TextInputLayout>
 
                         </LinearLayout>
@@ -264,7 +267,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:hint="任意"
-                                    android:inputType="text"/>
+                                    android:inputType="text"
+                                    android:text="@={registerViewModel.mUrl}"/>
                             </android.support.design.widget.TextInputLayout>
 
                         </LinearLayout>
@@ -288,7 +292,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:hint="＊入力必須"
-                                    android:inputType="textPassword"/>
+                                    android:inputType="textPassword"
+                                    android:text="@={registerViewModel.mPassword}"/>
                             </android.support.design.widget.TextInputLayout>
 
                         </LinearLayout>
@@ -307,7 +312,7 @@
                         android:id="@+id/activity_register_password_length_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="パスワード桁数"/>
+                        android:text="@{registerViewModel.mPasswordLengthTitle}"/>
 
                     <SeekBar
                         android:id="@+id/activity_register_seekbar"
@@ -315,7 +320,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:max="32"
-                        android:progress="8"/>
+                        android:progress="@={registerViewModel.mPasswordLength}"/>
 
                 </LinearLayout>
 
@@ -418,7 +423,8 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
                         android:background="@drawable/custom_button_style"
-                        android:text="生成"/>
+                        android:text="生成"
+                        android:onClick="@{registerViewModel::onClickButton}"/>
 
                     <Button
                         android:id="@+id/activity_register_save_button"
@@ -428,7 +434,9 @@
                         android:layout_marginRight="16dp"
                         android:layout_marginBottom="32dp"
                         android:background="@drawable/custom_button_style"
-                        android:text="保存"/>
+                        android:text="保存"
+                        android:enabled="@{registerViewModel.saveButtonEnabled}"
+                        android:onClick="@{registerViewModel::onClickButton}"/>
 
                 </LinearLayout>
 
