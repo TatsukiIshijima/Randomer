@@ -6,8 +6,10 @@ import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 
 import com.io.tatsuki.randomer.R;
+import com.io.tatsuki.randomer.Utils.KeyboardUtil;
 import com.io.tatsuki.randomer.ViewModels.RegisterViewModel;
 import com.io.tatsuki.randomer.databinding.ActivityRegisterBinding;
 
@@ -38,6 +40,21 @@ public class RegisterActivity extends AppCompatActivity {
         mBinding.setRegisterViewModel(mRegisterViewModel);
 
         setViews();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     /**
