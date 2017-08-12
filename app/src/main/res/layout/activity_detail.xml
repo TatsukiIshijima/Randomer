@@ -259,7 +259,6 @@
                         android:layout_marginBottom="32dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
-                        android:foreground="?android:attr/selectableItemBackground"
                         android:background="@drawable/custom_button_style"
                         android:text="編集"
                         android:onClick="@{detailViewModel::onClickButton}"/>
@@ -271,7 +270,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
-                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_marginBottom="16dp"
                         android:background="@drawable/custom_button_style"
                         android:text="削除"
                         android:onClick="@{detailViewModel::onClickButton}"/>
