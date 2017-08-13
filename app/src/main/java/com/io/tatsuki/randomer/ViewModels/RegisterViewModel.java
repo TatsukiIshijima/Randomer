@@ -12,6 +12,7 @@ import android.widget.SeekBar;
 
 import com.io.tatsuki.randomer.Events.ButtonEnableEvent;
 import com.io.tatsuki.randomer.R;
+import com.io.tatsuki.randomer.Utils.GenerateUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -64,14 +65,28 @@ public class RegisterViewModel {
     }
 
     /**
-     * 保存ボタンの活性・非活性の切り替え
-     * @return
+     * 生成ボタンの活性・非活性の切り替え
      */
-    private void getSaveButtonEnabled() {
-        if (mTitle.get() != null && mUserId.get() != null && mPassword.get() != null) {
-            EventBus.getDefault().post(new ButtonEnableEvent(true));
+    private void setGenerateButtonState() {
+        if (mNumberToggle.get() | mUpperToggle.get() | mLowerToggle.get() | mSymbolToggle.get()) {
+            EventBus.getDefault().post(new ButtonEnableEvent(ButtonEnableEvent.generateButtonFlag, true));
         } else {
-            EventBus.getDefault().post(new ButtonEnableEvent(false));
+            EventBus.getDefault().post(new ButtonEnableEvent(ButtonEnableEvent.generateButtonFlag, false));
+        }
+    }
+
+    /**
+     * 保存ボタンの活性・非活性の切り替え
+     */
+    private void setSaveButtonState() {
+        if (mTitle.get() != null && mUserId.get() != null && mPassword.get() != null) {
+            if (mTitle.get().length() > 0 && mUserId.get().length() > 0 && mPassword.get().length() > 0) {
+                EventBus.getDefault().post(new ButtonEnableEvent(ButtonEnableEvent.saveButtonFlag, true));
+            } else {
+                EventBus.getDefault().post(new ButtonEnableEvent(ButtonEnableEvent.saveButtonFlag, false));
+            }
+        } else {
+            EventBus.getDefault().post(new ButtonEnableEvent(ButtonEnableEvent.saveButtonFlag, false));
         }
     }
 
@@ -87,23 +102,53 @@ public class RegisterViewModel {
             // 生成ボタン
             case R.id.activity_register_generate_button:
                 Log.d(TAG, "Generate Button Clicked");
-                /* データバインディングテスト
-                Log.d(TAG,
-                                mTitle.get() + "\n" +
-                                mUserId.get() + "\n" +
-                                mPassword.get() + " : " + mPasswordLength.get() + "\n" +
-                                mNumberToggle.get() + "\n" +
-                                mUpperToggle.get() + "\n" +
-                                mLowerToggle.get() + "\n" +
-                                mSymbolToggle.get());
-                */
+                generate();
                 break;
             // 保存ボタン
             case R.id.activity_register_save_button:
                 Log.d(TAG, "Save Button Clicked");
                 break;
+            // 数字トグルボタン
+            case R.id.activity_register_number_toggle:
+                Log.d(TAG, "Number Toggle Clicked");
+                setGenerateButtonState();
+                break;
+            // 大文字トグルボタン
+            case R.id.activity_register_upper_toggle:
+                Log.d(TAG, "Upper Toggle Clicked");
+                setGenerateButtonState();
+                break;
+            // 小文字トグルボタン
+            case R.id.activity_register_lower_toggle:
+                Log.d(TAG, "Lower Toggle Clicked");
+                setGenerateButtonState();
+                break;
+            // 記号トグルボタン
+            case R.id.activity_register_symbol_toggle:
+                Log.d(TAG, "Symbol Toggle Clicked");
+                setGenerateButtonState();
+                break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * パスワード生成
+     */
+    private void generate() {
+        if (mPasswordLength.get() == 0) {
+            return;
+        }
+        if (mNumberToggle.get() | mUpperToggle.get() | mLowerToggle.get() | mSymbolToggle.get()) {
+            String password = GenerateUtil.generatePassword(mPasswordLength.get(),
+                                                            mNumberToggle.get(),
+                                                            mUpperToggle.get(),
+                                                            mLowerToggle.get(),
+                                                            mSymbolToggle.get());
+            mPassword.set(password);
+        } else {
+            return;
         }
     }
 
@@ -116,17 +161,19 @@ public class RegisterViewModel {
             // 変更前
             @Override
             public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
-
+                Log.d(TAG, "beforeTextChanged");
             }
             // 変更中
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                getSaveButtonEnabled();
+                Log.d(TAG, "onTextChanged");
+                setSaveButtonState();
             }
             // 変更後
             @Override
             public void afterTextChanged(Editable editable) {
-                getSaveButtonEnabled();
+                Log.d(TAG, "afterTextChanged");
+                setSaveButtonState();
             }
         };
         return textWatcher;

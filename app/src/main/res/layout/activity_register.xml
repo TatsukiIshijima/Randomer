@@ -342,7 +342,8 @@
                             android:id="@+id/activity_register_number_toggle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:checked="@={registerViewModel.mNumberToggle}"/>
+                            android:checked="@={registerViewModel.mNumberToggle}"
+                            android:onClick="@{registerViewModel::onClickButton}"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -362,7 +363,8 @@
                             android:id="@+id/activity_register_upper_toggle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:checked="@={registerViewModel.mUpperToggle}"/>
+                            android:checked="@={registerViewModel.mUpperToggle}"
+                            android:onClick="@{registerViewModel::onClickButton}"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -382,7 +384,8 @@
                             android:id="@+id/activity_register_lower_toggle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:checked="@={registerViewModel.mLowerToggle}"/>
+                            android:checked="@={registerViewModel.mLowerToggle}"
+                            android:onClick="@{registerViewModel::onClickButton}"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -402,7 +405,8 @@
                             android:id="@+id/activity_register_symbol_toggle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:checked="@={registerViewModel.mSymbolToggle}"/>
+                            android:checked="@={registerViewModel.mSymbolToggle}"
+                            android:onClick="@{registerViewModel::onClickButton}"/>
 
                         <TextView
                             android:layout_width="wrap_content"

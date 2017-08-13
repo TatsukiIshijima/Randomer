@@ -73,16 +73,16 @@ public class RegisterActivity extends AppCompatActivity {
     private void setViews() {
         // Toolbar
         setSupportActionBar(mBinding.activityRegisterToolbar);
+        // EditText
+        mBinding.activityRegisterTitleEdit.addTextChangedListener(mRegisterViewModel.textChangeLister());
+        mBinding.activityRegisterUserIdEdit.addTextChangedListener(mRegisterViewModel.textChangeLister());
+        mBinding.activityRegisterPasswordEdit.addTextChangedListener(mRegisterViewModel.textChangeLister());
         // SeekBar
         mRegisterViewModel.setPasswordLength(8);
         mRegisterViewModel.setPasswordLengthTitle();
         // データバインディングを実行しないとリスナーがセットされない
         mBinding.executePendingBindings();
         mBinding.activityRegisterSeekbar.setOnSeekBarChangeListener(mRegisterViewModel.seekBarChangeListener());
-        // EditText
-        mBinding.activityRegisterTitleEdit.addTextChangedListener(mRegisterViewModel.textChangeLister());
-        mBinding.activityRegisterUserIdEdit.addTextChangedListener(mRegisterViewModel.textChangeLister());
-        mBinding.activityRegisterPasswordEdit.addTextChangedListener(mRegisterViewModel.textChangeLister());
     }
 
     /**
@@ -90,6 +90,10 @@ public class RegisterActivity extends AppCompatActivity {
      */
     private void initButtonState() {
         mBinding.activityRegisterSaveButton.setEnabled(false);
+        mBinding.activityRegisterNumberToggle.setChecked(true);
+        mBinding.activityRegisterUpperToggle.setChecked(true);
+        mBinding.activityRegisterLowerToggle.setChecked(true);
+        mBinding.activityRegisterSymbolToggle.setChecked(true);
     }
 
     /**
@@ -98,6 +102,18 @@ public class RegisterActivity extends AppCompatActivity {
      */
     @Subscribe
     public void subScribeButtonEnableEvent(ButtonEnableEvent event) {
-        mBinding.activityRegisterSaveButton.setEnabled(event.isButtonFlag());
+        Log.d(TAG, "FLAG : " + event.getButtonFlag());
+        switch (event.getButtonFlag()) {
+            case ButtonEnableEvent.generateButtonFlag:
+                Log.d(TAG, "subScribeButtonEnableEvent : Generate");
+                mBinding.activityRegisterGenerateButton.setEnabled(event.isButtonState());
+                break;
+            case ButtonEnableEvent.saveButtonFlag:
+                Log.d(TAG, "subScribeButtonEnableEvent : Save" + event.isButtonState());
+                mBinding.activityRegisterSaveButton.setEnabled(event.isButtonState());
+                break;
+            default:
+                break;
+        }
     }
 }
