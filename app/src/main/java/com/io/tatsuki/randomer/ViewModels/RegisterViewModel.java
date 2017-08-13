@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.SeekBar;
 
 import com.io.tatsuki.randomer.Events.ButtonEvent;
+import com.io.tatsuki.randomer.Events.TransitionEvent;
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.Utils.GenerateUtil;
 
@@ -108,6 +109,8 @@ public class RegisterViewModel {
             // 保存ボタン
             case R.id.activity_register_save_button:
                 Log.d(TAG, "Save Button Clicked");
+                save();
+                EventBus.getDefault().post(new TransitionEvent(TransitionEvent.TRANS_TO_HOME_FLAG));
                 break;
             // 数字トグルボタン
             case R.id.activity_register_number_toggle:
@@ -151,6 +154,13 @@ public class RegisterViewModel {
         } else {
             return;
         }
+    }
+
+    /**
+     * 保存
+     */
+    public void save() {
+
     }
 
     /**

@@ -2,15 +2,20 @@ package com.io.tatsuki.randomer.Activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.io.tatsuki.randomer.Events.TransitionEvent;
 import com.io.tatsuki.randomer.Models.Item;
 import com.io.tatsuki.randomer.R;
+import com.io.tatsuki.randomer.Utils.ActivityForResultConstant;
 import com.io.tatsuki.randomer.ViewModels.DetailViewModel;
 import com.io.tatsuki.randomer.databinding.ActivityDetailBinding;
 
@@ -37,7 +42,6 @@ public class DetailActivity extends AppCompatActivity {
      */
     public static Intent detailIntent(@NonNull Context context, Item item) {
         Intent intent = new Intent(context, DetailActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle args = new Bundle();
         args.putSerializable(ITEM_KEY, item);
         intent.putExtras(args);
@@ -72,6 +76,18 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case ActivityForResultConstant.EDIT_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    Snackbar.make(mBinding.activityDetailCoordinateLayout, "編集しました。", Snackbar.LENGTH_SHORT).show();
+                }
+                break;
+        }
     }
 
     /**
@@ -111,6 +127,30 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     /**
+     * 削除の確認アラート表示
+     */
+    private void showDeleteAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setTitle("削除しますか？");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                mDetailViewModel.delete();
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
+        builder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.create().show();
+    }
+
+    /**
      * 画面遷移のためのイベント講読
      * @param event
      */
@@ -118,8 +158,11 @@ public class DetailActivity extends AppCompatActivity {
     public void subScribeTransitionEvent(TransitionEvent event) {
         switch (event.getTransitionFlag()) {
             case TransitionEvent.TRANS_TO_REGISTER_FLAG:
-                Intent intent = RegisterActivity.registerIntent(this, mItem);
-                startActivity(intent);
+                Intent registerIntent = RegisterActivity.registerIntent(this, mItem);
+                startActivityForResult(registerIntent, ActivityForResultConstant.EDIT_REQUEST);
+                break;
+            case TransitionEvent.TRANS_TO_HOME_FLAG:
+                showDeleteAlert();
                 break;
             default:
                 break;

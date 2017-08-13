@@ -9,10 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.io.tatsuki.randomer.Activities.DetailActivity;
+import com.io.tatsuki.randomer.Events.TransitionEvent;
 import com.io.tatsuki.randomer.Models.Item;
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.ViewModels.ItemViewModel;
 import com.io.tatsuki.randomer.databinding.ItemBinding;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -53,7 +56,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             @Override
             public void onClick(View view) {
                 // 詳細画面に遷移
-                mContext.startActivity(DetailActivity.detailIntent(mContext, item));
+                EventBus.getDefault().post(new TransitionEvent(TransitionEvent.TRANS_TO_DETAIL_FLAG, item));
             }
         });
     }

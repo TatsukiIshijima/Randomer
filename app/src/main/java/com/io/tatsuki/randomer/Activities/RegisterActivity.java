@@ -14,8 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.io.tatsuki.randomer.Events.ButtonEvent;
+import com.io.tatsuki.randomer.Events.TransitionEvent;
 import com.io.tatsuki.randomer.Models.Item;
 import com.io.tatsuki.randomer.R;
+import com.io.tatsuki.randomer.Utils.ActivityForResultConstant;
 import com.io.tatsuki.randomer.ViewModels.RegisterViewModel;
 import com.io.tatsuki.randomer.databinding.ActivityRegisterBinding;
 
@@ -45,7 +47,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     public static Intent registerIntent(@NonNull Context context, Item item) {
         Intent intent = new Intent(context, RegisterActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle args = new Bundle();
         args.putSerializable(ITEM_KEY, item);
         intent.putExtras(args);
@@ -179,6 +180,18 @@ public class RegisterActivity extends AppCompatActivity {
                 break;
             case ButtonEvent.addButtonFlag:
                 showAddAlert();
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Subscribe
+    public void subScribeTransitionEvent(TransitionEvent event) {
+        switch (event.getTransitionFlag()) {
+            case TransitionEvent.TRANS_TO_HOME_FLAG:
+                setResult(RESULT_OK);
+                finish();
                 break;
             default:
                 break;
