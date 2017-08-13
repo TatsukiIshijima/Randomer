@@ -14,8 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.io.tatsuki.randomer.Events.ButtonEvent;
+import com.io.tatsuki.randomer.Events.TransitionEvent;
 import com.io.tatsuki.randomer.Models.Item;
 import com.io.tatsuki.randomer.R;
+import com.io.tatsuki.randomer.Utils.ActivityForResultConstant;
 import com.io.tatsuki.randomer.ViewModels.RegisterViewModel;
 import com.io.tatsuki.randomer.databinding.ActivityRegisterBinding;
 
@@ -178,6 +180,20 @@ public class RegisterActivity extends AppCompatActivity {
                 break;
             case ButtonEvent.addButtonFlag:
                 showAddAlert();
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Subscribe
+    public void subScribeTransitionEvent(TransitionEvent event) {
+        switch (event.getTransitionFlag()) {
+            case TransitionEvent.TRANS_TO_HOME_FLAG:
+                Intent intent = new Intent();
+                intent.putExtra(ActivityForResultConstant.SAVE_MESSAGE, "保存しました。");
+                setResult(RESULT_OK, intent);
+                finish();
                 break;
             default:
                 break;

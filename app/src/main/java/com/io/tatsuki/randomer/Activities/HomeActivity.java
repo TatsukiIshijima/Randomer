@@ -87,8 +87,10 @@ public class HomeActivity extends AppCompatActivity {
                 }
                 break;
             case ActivityForResultConstant.REGISTER_REQUEST:
-                if (requestCode == RESULT_OK) {
-
+                if (resultCode == RESULT_OK) {
+                    Log.d(TAG, "REGISTER_OK");
+                    String message = data.getStringExtra(ActivityForResultConstant.SAVE_MESSAGE);
+                    Snackbar.make(mBinding.activityHomeCoordinateLayout, message, Snackbar.LENGTH_SHORT).show();
                 }  else {
 
                 }
