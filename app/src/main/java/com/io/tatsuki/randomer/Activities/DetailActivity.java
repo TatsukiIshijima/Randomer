@@ -23,10 +23,11 @@ import org.greenrobot.eventbus.Subscribe;
 public class DetailActivity extends AppCompatActivity {
 
     private static final String TAG = DetailActivity.class.getSimpleName();
-    private static final String ITEM_KEY = "ITEM_KEY";
+    private static final String ITEM_KEY = "ITEM_KEY_DETAIL";
 
     private ActivityDetailBinding mBinding;
     private DetailViewModel mDetailViewModel;
+    private Item mItem;
 
     /**
      * 画面遷移のためのIntent発行
@@ -48,7 +49,8 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 
-        mDetailViewModel = new DetailViewModel();
+        mItem = getItem();
+        mDetailViewModel = new DetailViewModel(mItem);
         mBinding.setDetailViewModel(mDetailViewModel);
 
         setViews();
@@ -81,17 +83,31 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     /**
+     * 受け渡しされたItemを受け取る
+     * @return  item
+     */
+    private Item getItem() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            Item item = (Item) bundle.getSerializable(ITEM_KEY);
+            return item;
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * 遷移後の受け取った各値の設定
      */
     private void setValue() {
-        Bundle bundle = getIntent().getExtras();
-        Item item = (Item) bundle.getSerializable(ITEM_KEY);
-        mDetailViewModel.setTitle(item.getMTitle());
-        mDetailViewModel.setUserId(item.getMUserId());
-        mDetailViewModel.setPassword(item.getMPassword());
-        mDetailViewModel.setUrl(item.getMUrl());
-        // TODO:以下が反映されない
-        mBinding.activityDetailToolbar.setTitle(item.getMCategory());
+        if (mItem != null) {
+            mDetailViewModel.setTitle();
+            mDetailViewModel.setUserId();
+            mDetailViewModel.setPassword();
+            mDetailViewModel.setUrl();
+            // TODO:以下が反映されない
+            mBinding.activityDetailToolbar.setTitle(mItem.getMCategory());
+        }
     }
 
     /**
@@ -102,7 +118,7 @@ public class DetailActivity extends AppCompatActivity {
     public void subScribeTransitionEvent(TransitionEvent event) {
         switch (event.getTransitionFlag()) {
             case TransitionEvent.TRANS_TO_REGISTER_FLAG:
-                Intent intent = RegisterActivity.registerIntent(this);
+                Intent intent = RegisterActivity.registerIntent(this, mItem);
                 startActivity(intent);
                 break;
             default:

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.io.tatsuki.randomer.Events.ButtonEvent;
+import com.io.tatsuki.randomer.Models.Item;
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.ViewModels.RegisterViewModel;
 import com.io.tatsuki.randomer.databinding.ActivityRegisterBinding;
@@ -27,6 +28,7 @@ import org.greenrobot.eventbus.Subscribe;
 public class RegisterActivity extends AppCompatActivity {
 
     private static final String TAG = RegisterActivity.class.getSimpleName();
+    private static final String ITEM_KEY = "ITEM_KEY_REGISTER";
 
     private ActivityRegisterBinding mBinding;
     private RegisterViewModel mRegisterViewModel;
@@ -41,6 +43,15 @@ public class RegisterActivity extends AppCompatActivity {
         return intent;
     }
 
+    public static Intent registerIntent(@NonNull Context context, Item item) {
+        Intent intent = new Intent(context, RegisterActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Bundle args = new Bundle();
+        args.putSerializable(ITEM_KEY, item);
+        intent.putExtras(args);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         setViews();
         initButtonState();
+        setValue();
     }
 
     @Override
@@ -86,6 +98,31 @@ public class RegisterActivity extends AppCompatActivity {
         // データバインディングを実行しないとリスナーがセットされない
         mBinding.executePendingBindings();
         mBinding.activityRegisterSeekbar.setOnSeekBarChangeListener(mRegisterViewModel.seekBarChangeListener());
+    }
+
+    /**
+     * 受け渡しされたItemを受け取る
+     * @return  item
+     */
+    private Item getItem() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            Item item = (Item) bundle.getSerializable(ITEM_KEY);
+            return item;
+        } else {
+            return null;
+        }
+    }
+
+    private void setValue() {
+        Item item = getItem();
+        if (item != null) {
+            // TODO:カテゴリーのセット
+            mRegisterViewModel.setTitle(item.getMTitle());
+            mRegisterViewModel.setUserId(item.getMUserId());
+            mRegisterViewModel.setPassword(item.getMPassword());
+            mRegisterViewModel.setUrl(item.getMUrl());
+        }
     }
 
     /**

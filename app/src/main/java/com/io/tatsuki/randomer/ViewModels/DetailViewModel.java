@@ -23,21 +23,26 @@ public class DetailViewModel {
     public ObservableField<String> mUserId = new ObservableField<>();
     public ObservableField<String> mPassword = new ObservableField<>();
     public ObservableField<String> mUrl = new ObservableField<>();
+    private Item mItem;
 
-    public void setTitle(String title) {
-        mTitle.set(title);
+    public DetailViewModel(Item item) {
+        this.mItem = item;
     }
 
-    public void setUserId(String userId) {
-        mUserId.set(userId);
+    public void setTitle() {
+        mTitle.set(mItem.getMTitle());
     }
 
-    public void setPassword(String password) {
-        mPassword.set(password);
+    public void setUserId() {
+        mUserId.set(mItem.getMUserId());
     }
 
-    public void setUrl(String url) {
-        mUrl.set(url);
+    public void setPassword() {
+        mPassword.set(mItem.getMPassword());
+    }
+
+    public void setUrl() {
+        mUrl.set(mItem.getMUrl());
     }
 
     /**
