@@ -3,20 +3,25 @@ package com.io.tatsuki.randomer.Events;
 import lombok.Getter;
 
 /**
- * ボタンの活性・非活性通知のイベント
+ * ボタンのイベント
  */
 
-public class ButtonEnableEvent {
+public class ButtonEvent {
 
     public static final int generateButtonFlag = 0;       // 生成ボタンフラグ
     public static final int saveButtonFlag     = 1;       // 保存ボタンフラグ
+    public static final int addButtonFlag      = 2;       // 追加ボタンフラグ
 
     @Getter
     private int buttonFlag;
     @Getter
     private boolean buttonState;
 
-    public ButtonEnableEvent(int flag, boolean state) {
+    public ButtonEvent(int flag) {
+        this.buttonFlag = flag;
+    }
+
+    public ButtonEvent(int flag, boolean state) {
         this.buttonFlag = flag;
         this.buttonState = state;
     }

@@ -1,17 +1,21 @@
 package com.io.tatsuki.randomer.Activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import com.io.tatsuki.randomer.Events.ButtonEnableEvent;
+import com.io.tatsuki.randomer.Events.ButtonEvent;
+import com.io.tatsuki.randomer.Models.Item;
 import com.io.tatsuki.randomer.R;
-import com.io.tatsuki.randomer.Utils.KeyboardUtil;
 import com.io.tatsuki.randomer.ViewModels.RegisterViewModel;
 import com.io.tatsuki.randomer.databinding.ActivityRegisterBinding;
 
@@ -24,6 +28,7 @@ import org.greenrobot.eventbus.Subscribe;
 public class RegisterActivity extends AppCompatActivity {
 
     private static final String TAG = RegisterActivity.class.getSimpleName();
+    private static final String ITEM_KEY = "ITEM_KEY_REGISTER";
 
     private ActivityRegisterBinding mBinding;
     private RegisterViewModel mRegisterViewModel;
@@ -38,6 +43,15 @@ public class RegisterActivity extends AppCompatActivity {
         return intent;
     }
 
+    public static Intent registerIntent(@NonNull Context context, Item item) {
+        Intent intent = new Intent(context, RegisterActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Bundle args = new Bundle();
+        args.putSerializable(ITEM_KEY, item);
+        intent.putExtras(args);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         setViews();
         initButtonState();
+        setValue();
     }
 
     @Override
@@ -86,6 +101,31 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     /**
+     * 受け渡しされたItemを受け取る
+     * @return  item
+     */
+    private Item getItem() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            Item item = (Item) bundle.getSerializable(ITEM_KEY);
+            return item;
+        } else {
+            return null;
+        }
+    }
+
+    private void setValue() {
+        Item item = getItem();
+        if (item != null) {
+            // TODO:カテゴリーのセット
+            mRegisterViewModel.setTitle(item.getMTitle());
+            mRegisterViewModel.setUserId(item.getMUserId());
+            mRegisterViewModel.setPassword(item.getMPassword());
+            mRegisterViewModel.setUrl(item.getMUrl());
+        }
+    }
+
+    /**
      * ボタンの初期化
      */
     private void initButtonState() {
@@ -97,20 +137,48 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     /**
+     * カテゴリーの追加のアラートの表示
+     */
+    private void showAddAlert() {
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.alert_add_category, (ViewGroup) findViewById(R.id.alert_add_category_linear_layout));
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setTitle("カテゴリー追加");
+        builder.setView(view);
+        builder.setPositiveButton("追加", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.create().show();
+    }
+
+    /**
      * ボタンの活性・非活性のイベント講読
      * @param event
      */
     @Subscribe
-    public void subScribeButtonEnableEvent(ButtonEnableEvent event) {
+    public void subScribeButtonEvent(ButtonEvent event) {
         Log.d(TAG, "FLAG : " + event.getButtonFlag());
         switch (event.getButtonFlag()) {
-            case ButtonEnableEvent.generateButtonFlag:
-                Log.d(TAG, "subScribeButtonEnableEvent : Generate");
+            case ButtonEvent.generateButtonFlag:
+                Log.d(TAG, "subScribeButtonEvent : Generate");
                 mBinding.activityRegisterGenerateButton.setEnabled(event.isButtonState());
                 break;
-            case ButtonEnableEvent.saveButtonFlag:
-                Log.d(TAG, "subScribeButtonEnableEvent : Save" + event.isButtonState());
+            case ButtonEvent.saveButtonFlag:
+                Log.d(TAG, "subScribeButtonEvent : Save");
                 mBinding.activityRegisterSaveButton.setEnabled(event.isButtonState());
+                break;
+            case ButtonEvent.addButtonFlag:
+                showAddAlert();
                 break;
             default:
                 break;

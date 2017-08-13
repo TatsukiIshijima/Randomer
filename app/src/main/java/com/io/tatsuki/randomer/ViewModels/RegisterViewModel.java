@@ -7,10 +7,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.SeekBar;
 
-import com.io.tatsuki.randomer.Events.ButtonEnableEvent;
+import com.io.tatsuki.randomer.Events.ButtonEvent;
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.Utils.GenerateUtil;
 
@@ -69,9 +68,9 @@ public class RegisterViewModel {
      */
     private void setGenerateButtonState() {
         if (mNumberToggle.get() | mUpperToggle.get() | mLowerToggle.get() | mSymbolToggle.get()) {
-            EventBus.getDefault().post(new ButtonEnableEvent(ButtonEnableEvent.generateButtonFlag, true));
+            EventBus.getDefault().post(new ButtonEvent(ButtonEvent.generateButtonFlag, true));
         } else {
-            EventBus.getDefault().post(new ButtonEnableEvent(ButtonEnableEvent.generateButtonFlag, false));
+            EventBus.getDefault().post(new ButtonEvent(ButtonEvent.generateButtonFlag, false));
         }
     }
 
@@ -81,12 +80,12 @@ public class RegisterViewModel {
     private void setSaveButtonState() {
         if (mTitle.get() != null && mUserId.get() != null && mPassword.get() != null) {
             if (mTitle.get().length() > 0 && mUserId.get().length() > 0 && mPassword.get().length() > 0) {
-                EventBus.getDefault().post(new ButtonEnableEvent(ButtonEnableEvent.saveButtonFlag, true));
+                EventBus.getDefault().post(new ButtonEvent(ButtonEvent.saveButtonFlag, true));
             } else {
-                EventBus.getDefault().post(new ButtonEnableEvent(ButtonEnableEvent.saveButtonFlag, false));
+                EventBus.getDefault().post(new ButtonEvent(ButtonEvent.saveButtonFlag, false));
             }
         } else {
-            EventBus.getDefault().post(new ButtonEnableEvent(ButtonEnableEvent.saveButtonFlag, false));
+            EventBus.getDefault().post(new ButtonEvent(ButtonEvent.saveButtonFlag, false));
         }
     }
 
@@ -96,8 +95,10 @@ public class RegisterViewModel {
      */
     public void onClickButton(View view) {
         switch (view.getId()) {
+            //  カテゴリー追加ボタン
             case R.id.activity_register_add_button:
                 Log.d(TAG, "Add Button Clicked");
+                EventBus.getDefault().post(new ButtonEvent(ButtonEvent.addButtonFlag));
                 break;
             // 生成ボタン
             case R.id.activity_register_generate_button:
