@@ -8,10 +8,16 @@ import lombok.Getter;
 
 public class ButtonEnableEvent {
 
-    @Getter
-    private boolean buttonFlag;
+    public static final int generateButtonFlag = 0;       // 生成ボタンフラグ
+    public static final int saveButtonFlag     = 1;       // 保存ボタンフラグ
 
-    public ButtonEnableEvent(boolean flag) {
+    @Getter
+    private int buttonFlag;
+    @Getter
+    private boolean buttonState;
+
+    public ButtonEnableEvent(int flag, boolean state) {
         this.buttonFlag = flag;
+        this.buttonState = state;
     }
 }
