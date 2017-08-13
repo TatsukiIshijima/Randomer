@@ -1,113 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <GridLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
+    <GridView
+        android:id="@+id/alert_select_category_grid_view"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
-        android:columnCount="4"
-        android:rowCount="4"
-        android:layout_gravity="center">
+        android:verticalSpacing="5dp"
+        android:horizontalSpacing="5dp"
+        android:numColumns="4"
+        android:gravity="center">
+    </GridView>
 
-        <ImageView
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_airplane"/>
-
-        <ImageView
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_car"/>
-
-        <ImageView
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_cloud"/>
-
-        <ImageView
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_food"/>
-
-        <ImageView
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_internet"/>
-
-        <ImageView
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_mail"/>
-
-        <ImageView
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_map"/>
-
-        <ImageView
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_music"/>
-
-        <ImageView
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_pc"/>
-
-        <ImageView
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_photo"/>
-
-        <ImageView
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_setting"/>
-
-        <ImageView
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_share"/>
-
-        <ImageView
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_shopping"/>
-
-        <ImageView
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_track"/>
-
-        <ImageView
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_train"/>
-
-        <ImageView
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_other"/>
-
-    </GridLayout>
-</ScrollView>
+</LinearLayout>
