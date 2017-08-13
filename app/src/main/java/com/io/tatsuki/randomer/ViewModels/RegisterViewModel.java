@@ -108,6 +108,7 @@ public class RegisterViewModel {
             // 保存ボタン
             case R.id.activity_register_save_button:
                 Log.d(TAG, "Save Button Clicked");
+                save();
                 break;
             // 数字トグルボタン
             case R.id.activity_register_number_toggle:
@@ -151,6 +152,13 @@ public class RegisterViewModel {
         } else {
             return;
         }
+    }
+
+    /**
+     * 保存
+     */
+    public void save() {
+
     }
 
     /**

@@ -60,8 +60,16 @@ public class DetailViewModel {
             // 削除ボタン
             case R.id.activity_detail_delete_button:
                 Log.d(TAG, "Delete Button Clicked");
-                // ホーム画面に遷移（ActivityForResult?）
+                // ホーム画面に遷移
+                EventBus.getDefault().post(new TransitionEvent(TransitionEvent.TRANS_TO_HOME_FLAG));
                 break;
         }
+    }
+
+    /**
+     * 削除
+     */
+    public void delete() {
+
     }
 }
