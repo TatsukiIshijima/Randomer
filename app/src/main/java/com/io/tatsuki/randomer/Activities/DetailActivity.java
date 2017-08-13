@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -77,6 +78,18 @@ public class DetailActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case ActivityForResultConstant.EDIT_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    Snackbar.make(mBinding.activityDetailCoordinateLayout, "編集しました。", Snackbar.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
     /**
      * 各Viewの設定
      */
@@ -124,9 +137,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 mDetailViewModel.delete();
-                Intent intent = new Intent();
-                intent.putExtra(ActivityForResultConstant.DELETE_MESSAGE, "削除しました。");
-                setResult(RESULT_OK, intent);
+                setResult(RESULT_OK);
                 finish();
             }
         });
@@ -148,7 +159,7 @@ public class DetailActivity extends AppCompatActivity {
         switch (event.getTransitionFlag()) {
             case TransitionEvent.TRANS_TO_REGISTER_FLAG:
                 Intent registerIntent = RegisterActivity.registerIntent(this, mItem);
-                startActivity(registerIntent);
+                startActivityForResult(registerIntent, ActivityForResultConstant.EDIT_REQUEST);
                 break;
             case TransitionEvent.TRANS_TO_HOME_FLAG:
                 showDeleteAlert();

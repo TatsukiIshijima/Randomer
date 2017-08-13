@@ -190,9 +190,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void subScribeTransitionEvent(TransitionEvent event) {
         switch (event.getTransitionFlag()) {
             case TransitionEvent.TRANS_TO_HOME_FLAG:
-                Intent intent = new Intent();
-                intent.putExtra(ActivityForResultConstant.SAVE_MESSAGE, "保存しました。");
-                setResult(RESULT_OK, intent);
+                setResult(RESULT_OK);
                 finish();
                 break;
             default:

@@ -80,19 +80,12 @@ public class HomeActivity extends AppCompatActivity {
         switch (requestCode) {
             case ActivityForResultConstant.DELETE_REQUEST:
                 if (resultCode == RESULT_OK) {
-                    String message = data.getStringExtra(ActivityForResultConstant.DELETE_MESSAGE);
-                    Snackbar.make(mBinding.activityHomeCoordinateLayout, message, Snackbar.LENGTH_SHORT).show();
-                } else {
-
+                    Snackbar.make(mBinding.activityHomeCoordinateLayout, "削除しました。", Snackbar.LENGTH_SHORT).show();
                 }
                 break;
             case ActivityForResultConstant.REGISTER_REQUEST:
                 if (resultCode == RESULT_OK) {
-                    Log.d(TAG, "REGISTER_OK");
-                    String message = data.getStringExtra(ActivityForResultConstant.SAVE_MESSAGE);
-                    Snackbar.make(mBinding.activityHomeCoordinateLayout, message, Snackbar.LENGTH_SHORT).show();
-                }  else {
-
+                    Snackbar.make(mBinding.activityHomeCoordinateLayout, "保存しました。", Snackbar.LENGTH_SHORT).show();
                 }
                 break;
         }
