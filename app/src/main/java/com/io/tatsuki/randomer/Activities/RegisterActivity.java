@@ -45,7 +45,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     public static Intent registerIntent(@NonNull Context context, Item item) {
         Intent intent = new Intent(context, RegisterActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle args = new Bundle();
         args.putSerializable(ITEM_KEY, item);
         intent.putExtras(args);
