@@ -192,11 +192,11 @@ public class RegisterActivity extends AppCompatActivity {
     public void subScribeTransitionEvent(TransitionEvent event) {
         switch (event.getTransitionFlag()) {
             case TransitionEvent.TRANS_TO_HOME_FLAG:
-                //android.app.FragmentManager fragmentManager = getFragmentManager();
-                //CategorySelectFragment fragment = new CategorySelectFragment();
-                //fragment.show(fragmentManager, "");
-                setResult(RESULT_OK);
-                finish();
+                android.app.FragmentManager fragmentManager = getFragmentManager();
+                CategorySelectFragment fragment = new CategorySelectFragment();
+                fragment.show(fragmentManager, "show category fragment");
+                //setResult(RESULT_OK);
+                //finish();
                 break;
             default:
                 break;
