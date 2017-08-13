@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.io.tatsuki.randomer.Events.ButtonEvent;
 import com.io.tatsuki.randomer.Events.TransitionEvent;
+import com.io.tatsuki.randomer.Fragments.CategorySelectFragment;
 import com.io.tatsuki.randomer.Models.Item;
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.Utils.ActivityForResultConstant;
@@ -190,6 +192,9 @@ public class RegisterActivity extends AppCompatActivity {
     public void subScribeTransitionEvent(TransitionEvent event) {
         switch (event.getTransitionFlag()) {
             case TransitionEvent.TRANS_TO_HOME_FLAG:
+                //android.app.FragmentManager fragmentManager = getFragmentManager();
+                //CategorySelectFragment fragment = new CategorySelectFragment();
+                //fragment.show(fragmentManager, "");
                 setResult(RESULT_OK);
                 finish();
                 break;
