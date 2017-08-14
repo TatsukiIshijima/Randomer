@@ -19,6 +19,8 @@ import com.io.tatsuki.randomer.Utils.GenerateUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
+
 /**
  * 登録画面のViewModel
  */
@@ -171,6 +173,21 @@ public class RegisterViewModel {
         Log.d(TAG, "Password : " + item.getMPassword());
         Log.d(TAG, "URL : " + item.getMUrl());
         Log.d(TAG, "ImagePath : " + item.getMImagePath());
+    }
+
+    /**
+     * カテゴリーリストの取得
+     * @return  categoryList
+     */
+    public ArrayList<String> getCategoryList() {
+        ArrayList<String> categoryList = new ArrayList<>();
+        categoryList.add("Web");
+        categoryList.add("PC");
+        categoryList.add("Train");
+        categoryList.add("SNS");
+        categoryList.add("EC");
+        categoryList.add("Bank");
+        return categoryList;
     }
 
     /**
