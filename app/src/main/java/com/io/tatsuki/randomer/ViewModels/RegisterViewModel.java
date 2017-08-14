@@ -11,6 +11,7 @@ import android.widget.SeekBar;
 
 import com.io.tatsuki.randomer.Events.ButtonEvent;
 import com.io.tatsuki.randomer.Events.TransitionEvent;
+import com.io.tatsuki.randomer.Models.Item;
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.Utils.GenerateUtil;
 
@@ -109,8 +110,10 @@ public class RegisterViewModel {
             // 保存ボタン
             case R.id.activity_register_save_button:
                 Log.d(TAG, "Save Button Clicked");
-                save();
-                EventBus.getDefault().post(new TransitionEvent(TransitionEvent.TRANS_TO_HOME_FLAG));
+                // イベントにItemも渡して通知
+                // TODO:カテゴリーも取得できるように修正
+                Item item = new Item(null, mTitle.get(), mUserId.get(), mPassword.get(), mUrl.get(), null);
+                EventBus.getDefault().post(new TransitionEvent(TransitionEvent.TRANS_TO_HOME_FLAG, item));
                 break;
             // 数字トグルボタン
             case R.id.activity_register_number_toggle:
@@ -159,8 +162,13 @@ public class RegisterViewModel {
     /**
      * 保存
      */
-    public void save() {
-
+    public void save(Item item) {
+        Log.d(TAG, "Category : " + item.getMCategory());
+        Log.d(TAG, "Title : " + item.getMTitle());
+        Log.d(TAG, "UserID : " + item.getMUserId());
+        Log.d(TAG, "Password : " + item.getMPassword());
+        Log.d(TAG, "URL : " + item.getMUrl());
+        Log.d(TAG, "ImagePath : " + item.getMImagePath());
     }
 
     /**

@@ -10,7 +10,14 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.io.tatsuki.randomer.Adapters.CategoryItemAdapter;
+import com.io.tatsuki.randomer.Events.TransitionEvent;
+import com.io.tatsuki.randomer.Models.Item;
 import com.io.tatsuki.randomer.R;
+import com.io.tatsuki.randomer.ViewModels.RegisterViewModel;
+
+import org.greenrobot.eventbus.EventBus;
+
+import static com.io.tatsuki.randomer.Activities.RegisterActivity.ITEM_KEY;
 
 /**
  * カテゴリーアイコン選択 Fragment
@@ -21,10 +28,14 @@ public class CategorySelectFragment extends DialogFragment {
     private static final String TAG = CategorySelectFragment.class.getSimpleName();
     private AlertDialog alertDialog;
     private AlertDialog.Builder builder;
+    private RegisterViewModel registerViewModel;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         builder = new AlertDialog.Builder(getActivity());
+
+        registerViewModel = new RegisterViewModel();
+        final Item item = getItem();
 
         alertDialog = builder.create();
         alertDialog.setTitle("アイコン選択");
@@ -38,6 +49,12 @@ public class CategorySelectFragment extends DialogFragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.d(TAG, "onItemClick : " + i);
+                // ImagePathの取得
+                item.setMImagePath("path" + i);
+                // 保存の実行
+                registerViewModel.save(item);
+                // TODO:RegisterActivityに通知
+
             }
         });
 
@@ -45,5 +62,19 @@ public class CategorySelectFragment extends DialogFragment {
         alertDialog.show();
 
         return alertDialog;
+    }
+
+    /**
+     * 受け渡しされたItemを受け取る
+     * @return  item
+     */
+    private Item getItem() {
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            Item item = (Item) bundle.getSerializable(ITEM_KEY);
+            return item;
+        } else {
+            return null;
+        }
     }
 }
