@@ -41,6 +41,8 @@ public class RegisterViewModel {
     public ObservableBoolean mLowerToggle = new ObservableBoolean();
     public ObservableBoolean mSymbolToggle = new ObservableBoolean();
 
+    private ArrayList<String> mCategoryList = new ArrayList<>();
+
     public void setCategory(String category) {
         mCategory.set(category);
     }
@@ -67,6 +69,19 @@ public class RegisterViewModel {
 
     public void setPasswordLengthTitle() {
         mPasswordLengthTitle.set("パスワード桁数 : " + mPasswordLength.get());
+    }
+
+    // TODO:DBから読み込む用にする
+    public ArrayList<String> getCategoryList() {
+        return mCategoryList;
+    }
+
+    /**
+     * カテゴリーをArrayListに追加
+     * @param category
+     */
+    public void addCategory(String category) {
+        mCategoryList.add(category);
     }
 
     /**
@@ -173,21 +188,6 @@ public class RegisterViewModel {
         Log.d(TAG, "Password : " + item.getMPassword());
         Log.d(TAG, "URL : " + item.getMUrl());
         Log.d(TAG, "ImagePath : " + item.getMImagePath());
-    }
-
-    /**
-     * カテゴリーリストの取得
-     * @return  categoryList
-     */
-    public ArrayList<String> getCategoryList() {
-        ArrayList<String> categoryList = new ArrayList<>();
-        categoryList.add("Web");
-        categoryList.add("PC");
-        categoryList.add("Train");
-        categoryList.add("SNS");
-        categoryList.add("EC");
-        categoryList.add("Bank");
-        return categoryList;
     }
 
     /**

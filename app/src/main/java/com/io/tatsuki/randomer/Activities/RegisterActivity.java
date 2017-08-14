@@ -39,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private ActivityRegisterBinding mBinding;
     private RegisterViewModel mRegisterViewModel;
+    private ArrayAdapter mArrayAdapter;
 
     /**
      * 画面遷移のためのIntent発行
@@ -105,10 +106,9 @@ public class RegisterActivity extends AppCompatActivity {
         mBinding.executePendingBindings();
         mBinding.activityRegisterSeekbar.setOnSeekBarChangeListener(mRegisterViewModel.seekBarChangeListener());
         // Spinner
-        // ダミーデータ
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mRegisterViewModel.getCategoryList());
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mBinding.activityRegisterSpinner.setAdapter(arrayAdapter);
+        mArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mRegisterViewModel.getCategoryList());
+        mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mBinding.activityRegisterSpinner.setAdapter(mArrayAdapter);
         mBinding.activityRegisterSpinner.setOnItemSelectedListener(mRegisterViewModel.spinnerItemSelected());
     }
 
@@ -163,7 +163,9 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 EditText editText = (EditText) view.findViewById(R.id.alert_add_category_edit);
                 if (editText.getText().length() != 0) {
-                    // TODO:リスト更新
+                    mRegisterViewModel.addCategory(editText.getText().toString());
+                    // リスト更新
+                    mArrayAdapter.notifyDataSetChanged();
                     Snackbar.make(mBinding.activityRegisterCoordinateLayout, "追加しました。", Snackbar.LENGTH_SHORT).show();
                 } else {
                     Snackbar.make(mBinding.activityRegisterCoordinateLayout, "追加できませんでした。", Snackbar.LENGTH_SHORT).show();
