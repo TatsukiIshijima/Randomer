@@ -112,7 +112,7 @@ public class RegisterViewModel {
                 Log.d(TAG, "Save Button Clicked");
                 // イベントにItemも渡して通知
                 // TODO:カテゴリーも取得できるように修正
-                Item item = new Item(null, mTitle.get(), mUserId.get(), mPassword.get(), mUrl.get(), null);
+                Item item = new Item(mCategory.get(), mTitle.get(), mUserId.get(), mPassword.get(), mUrl.get(), null);
                 EventBus.getDefault().post(new TransitionEvent(TransitionEvent.TRANS_TO_HOME_FLAG, item));
                 break;
             // 数字トグルボタン

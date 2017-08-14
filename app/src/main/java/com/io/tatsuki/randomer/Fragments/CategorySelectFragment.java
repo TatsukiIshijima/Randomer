@@ -53,8 +53,9 @@ public class CategorySelectFragment extends DialogFragment {
                 item.setMImagePath("path" + i);
                 // 保存の実行
                 registerViewModel.save(item);
-                // TODO:RegisterActivityに通知
-
+                // RegisterActivityに通知
+                EventBus.getDefault().post(new TransitionEvent(TransitionEvent.BACK_CATEGORY_SELECT_TO_REGISTER_FLAG));
+                alertDialog.cancel();
             }
         });
 
