@@ -37,4 +37,13 @@ public class Item implements Serializable {
     @Getter
     private String mImagePath;
 
+    public Item(String category, String title, String userId, String password, String url, String imagePath) {
+        this.mCategory = category;
+        this.mTitle = title;
+        this.mUserId = userId;
+        this.mPassword = password;
+        this.mUrl = url;
+        this.mImagePath = imagePath;
+    }
+
 }

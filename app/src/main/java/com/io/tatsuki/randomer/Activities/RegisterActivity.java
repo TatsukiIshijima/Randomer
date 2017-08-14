@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.io.tatsuki.randomer.Events.ButtonEvent;
 import com.io.tatsuki.randomer.Events.TransitionEvent;
+import com.io.tatsuki.randomer.Fragments.CategorySelectFragment;
 import com.io.tatsuki.randomer.Models.Item;
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.Utils.ActivityForResultConstant;
@@ -30,7 +32,7 @@ import org.greenrobot.eventbus.Subscribe;
 public class RegisterActivity extends AppCompatActivity {
 
     private static final String TAG = RegisterActivity.class.getSimpleName();
-    private static final String ITEM_KEY = "ITEM_KEY_REGISTER";
+    public static final String ITEM_KEY = "ITEM_KEY_REGISTER";
 
     private ActivityRegisterBinding mBinding;
     private RegisterViewModel mRegisterViewModel;
@@ -186,13 +188,27 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 画面遷移イベント講読
+     * @param event
+     */
     @Subscribe
     public void subScribeTransitionEvent(TransitionEvent event) {
         switch (event.getTransitionFlag()) {
             case TransitionEvent.TRANS_TO_HOME_FLAG:
+                // カテゴリーアイコンリスト表示
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(ITEM_KEY, event.getItem());
+                android.app.FragmentManager fragmentManager = getFragmentManager();
+                CategorySelectFragment fragment = new CategorySelectFragment();
+                // Itemの受け渡し
+                fragment.setArguments(bundle);
+                fragment.show(fragmentManager, "show category fragment");
+
+                break;
+            case TransitionEvent.BACK_CATEGORY_SELECT_TO_REGISTER_FLAG:
                 setResult(RESULT_OK);
                 finish();
-                break;
             default:
                 break;
         }
