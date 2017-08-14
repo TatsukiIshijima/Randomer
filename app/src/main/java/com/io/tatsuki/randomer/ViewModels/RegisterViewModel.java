@@ -7,7 +7,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 
 import com.io.tatsuki.randomer.Events.ButtonEvent;
 import com.io.tatsuki.randomer.Events.TransitionEvent;
@@ -225,5 +227,25 @@ public class RegisterViewModel {
             }
         };
         return seekBarChangeListener;
+    }
+
+    /**
+     * Spinnerのイベント
+     */
+    public Spinner.OnItemSelectedListener spinnerItemSelected() {
+        Spinner.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Spinner spinner = (Spinner) adapterView;
+                String category = (String) spinner.getSelectedItem();
+                mCategory.set(category);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        };
+        return itemSelectedListener;
     }
 }

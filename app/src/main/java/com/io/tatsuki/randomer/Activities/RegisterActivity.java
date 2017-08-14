@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
 import com.io.tatsuki.randomer.Events.ButtonEvent;
 import com.io.tatsuki.randomer.Events.TransitionEvent;
@@ -101,6 +102,14 @@ public class RegisterActivity extends AppCompatActivity {
         // データバインディングを実行しないとリスナーがセットされない
         mBinding.executePendingBindings();
         mBinding.activityRegisterSeekbar.setOnSeekBarChangeListener(mRegisterViewModel.seekBarChangeListener());
+        // Spinner
+        // ダミーデータ
+        // TODO:カテゴリーリストの取得はRegisterViewModelで行う
+        String mCategoryList[] = {"TV", "INTERNET", "APPLE", "GOOGLE", "SONY",};
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mCategoryList);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mBinding.activityRegisterSpinner.setAdapter(arrayAdapter);
+        mBinding.activityRegisterSpinner.setOnItemSelectedListener(mRegisterViewModel.spinnerItemSelected());
     }
 
     /**
