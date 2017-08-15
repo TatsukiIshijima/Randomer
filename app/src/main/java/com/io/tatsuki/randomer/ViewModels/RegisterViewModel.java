@@ -7,7 +7,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 
 import com.io.tatsuki.randomer.Events.ButtonEvent;
 import com.io.tatsuki.randomer.Events.TransitionEvent;
@@ -16,6 +18,8 @@ import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.Utils.GenerateUtil;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
 
 /**
  * 登録画面のViewModel
@@ -36,6 +40,8 @@ public class RegisterViewModel {
     public ObservableBoolean mUpperToggle = new ObservableBoolean();
     public ObservableBoolean mLowerToggle = new ObservableBoolean();
     public ObservableBoolean mSymbolToggle = new ObservableBoolean();
+
+    private ArrayList<String> mCategoryList = new ArrayList<>();
 
     public void setCategory(String category) {
         mCategory.set(category);
@@ -63,6 +69,19 @@ public class RegisterViewModel {
 
     public void setPasswordLengthTitle() {
         mPasswordLengthTitle.set("パスワード桁数 : " + mPasswordLength.get());
+    }
+
+    // TODO:DBから読み込む用にする
+    public ArrayList<String> getCategoryList() {
+        return mCategoryList;
+    }
+
+    /**
+     * カテゴリーをArrayListに追加
+     * @param category
+     */
+    public void addCategory(String category) {
+        mCategoryList.add(category);
     }
 
     /**
@@ -225,5 +244,25 @@ public class RegisterViewModel {
             }
         };
         return seekBarChangeListener;
+    }
+
+    /**
+     * Spinnerのイベント
+     */
+    public Spinner.OnItemSelectedListener spinnerItemSelected() {
+        Spinner.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Spinner spinner = (Spinner) adapterView;
+                String category = (String) spinner.getSelectedItem();
+                mCategory.set(category);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        };
+        return itemSelectedListener;
     }
 }

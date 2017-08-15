@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 
 import com.io.tatsuki.randomer.Events.ButtonEvent;
 import com.io.tatsuki.randomer.Events.TransitionEvent;
@@ -36,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private ActivityRegisterBinding mBinding;
     private RegisterViewModel mRegisterViewModel;
+    private ArrayAdapter mArrayAdapter;
 
     /**
      * 画面遷移のためのIntent発行
@@ -101,6 +105,11 @@ public class RegisterActivity extends AppCompatActivity {
         // データバインディングを実行しないとリスナーがセットされない
         mBinding.executePendingBindings();
         mBinding.activityRegisterSeekbar.setOnSeekBarChangeListener(mRegisterViewModel.seekBarChangeListener());
+        // Spinner
+        mArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mRegisterViewModel.getCategoryList());
+        mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mBinding.activityRegisterSpinner.setAdapter(mArrayAdapter);
+        mBinding.activityRegisterSpinner.setOnItemSelectedListener(mRegisterViewModel.spinnerItemSelected());
     }
 
     /**
@@ -144,7 +153,7 @@ public class RegisterActivity extends AppCompatActivity {
      */
     private void showAddAlert() {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.alert_add_category, (ViewGroup) findViewById(R.id.alert_add_category_linear_layout));
+        final View view = inflater.inflate(R.layout.alert_add_category, (ViewGroup) findViewById(R.id.alert_add_category_linear_layout));
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
         builder.setTitle("カテゴリー追加");
@@ -152,7 +161,15 @@ public class RegisterActivity extends AppCompatActivity {
         builder.setPositiveButton("追加", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
+                EditText editText = (EditText) view.findViewById(R.id.alert_add_category_edit);
+                if (editText.getText().length() != 0) {
+                    mRegisterViewModel.addCategory(editText.getText().toString());
+                    // リスト更新
+                    mArrayAdapter.notifyDataSetChanged();
+                    Snackbar.make(mBinding.activityRegisterCoordinateLayout, "追加しました。", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    Snackbar.make(mBinding.activityRegisterCoordinateLayout, "追加できませんでした。", Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
         builder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {

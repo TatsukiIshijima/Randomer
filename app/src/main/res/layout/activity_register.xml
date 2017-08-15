@@ -191,7 +191,8 @@
                                 android:id="@+id/activity_register_spinner"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="0.7"/>
+                                android:layout_weight="0.7"
+                                android:spinnerMode="dialog"/>
 
                             <Button
                                 android:id="@+id/activity_register_add_button"

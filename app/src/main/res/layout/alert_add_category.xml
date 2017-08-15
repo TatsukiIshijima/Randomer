@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
 
     <EditText
+        android:id="@+id/alert_add_category_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
