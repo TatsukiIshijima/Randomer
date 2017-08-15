@@ -29,7 +29,7 @@ public class Item {
     @NotNull
     private String imagePath;
 
-    @Generated
+    @Generated(hash = 1470900980)
     public Item() {
     }
 
@@ -37,8 +37,9 @@ public class Item {
         this.id = id;
     }
 
-    @Generated
-    public Item(Long id, String category, String title, String usetId, String password, String url, String imagePath) {
+    @Generated(hash = 36501850)
+    public Item(Long id, @NotNull String category, @NotNull String title, @NotNull String usetId, @NotNull String password,
+            String url, @NotNull String imagePath) {
         this.id = id;
         this.category = category;
         this.title = title;
