@@ -53,7 +53,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 
-        mItem = getItem();
+        getItem();
         mDetailViewModel = new DetailViewModel(mItem);
         mBinding.setDetailViewModel(mDetailViewModel);
 
@@ -102,13 +102,10 @@ public class DetailActivity extends AppCompatActivity {
      * 受け渡しされたItemを受け取る
      * @return  item
      */
-    private Item getItem() {
+    private void getItem() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            Item item = (Item) bundle.getSerializable(ITEM_KEY);
-            return item;
-        } else {
-            return null;
+            mItem = (Item) bundle.getSerializable(ITEM_KEY);
         }
     }
 
@@ -117,12 +114,11 @@ public class DetailActivity extends AppCompatActivity {
      */
     private void setValue() {
         if (mItem != null) {
+            mDetailViewModel.setCategory();
             mDetailViewModel.setTitle();
             mDetailViewModel.setUserId();
             mDetailViewModel.setPassword();
             mDetailViewModel.setUrl();
-            // TODO:以下が反映されない
-            mBinding.activityDetailToolbar.setTitle(mItem.getCategory());
         }
     }
 

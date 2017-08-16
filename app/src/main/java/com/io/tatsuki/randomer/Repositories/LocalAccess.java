@@ -59,11 +59,12 @@ public class LocalAccess {
 
     /**
      * カテゴリーリストの取得
-     * @return
+     * @return categoryList
      */
     public List<String> fetchCategoryList() {
         List<String> categoryList = new ArrayList<>();
         List<Item> categoryItemList = mItemDao.queryBuilder().orderDesc(ItemDao.Properties.Category).list();
+        // TODO:重複を外す
         for(Item item : categoryItemList) {
             categoryList.add(item.getCategory());
         }

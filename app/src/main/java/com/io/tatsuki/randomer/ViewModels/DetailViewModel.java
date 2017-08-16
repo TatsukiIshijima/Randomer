@@ -19,6 +19,7 @@ public class DetailViewModel {
 
     private static final String TAG = DetailViewModel.class.getSimpleName();
 
+    public ObservableField<String> mCategory = new ObservableField<>();
     public ObservableField<String> mTitle = new ObservableField<>();
     public ObservableField<String> mUserId = new ObservableField<>();
     public ObservableField<String> mPassword = new ObservableField<>();
@@ -27,6 +28,10 @@ public class DetailViewModel {
 
     public DetailViewModel(Item item) {
         this.mItem = item;
+    }
+
+    public void setCategory() {
+        mCategory.set(mItem.getCategory());
     }
 
     public void setTitle() {
