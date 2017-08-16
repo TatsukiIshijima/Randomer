@@ -1,6 +1,5 @@
 package com.io.tatsuki.randomer.Activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -18,8 +17,9 @@ import android.view.MenuItem;
 
 import com.io.tatsuki.randomer.Adapters.ItemAdapter;
 import com.io.tatsuki.randomer.Events.TransitionEvent;
-import com.io.tatsuki.randomer.Models.Item;
+
 import com.io.tatsuki.randomer.R;
+import com.io.tatsuki.randomer.Repositories.db.Item;
 import com.io.tatsuki.randomer.Utils.ActivityForResultConstant;
 import com.io.tatsuki.randomer.ViewModels.HomeViewModel;
 import com.io.tatsuki.randomer.databinding.ActivityHomeBinding;
@@ -27,7 +27,7 @@ import com.io.tatsuki.randomer.databinding.ActivityHomeBinding;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  *  ホーム画面
@@ -39,7 +39,7 @@ public class HomeActivity extends AppCompatActivity {
     private ActivityHomeBinding mBinding;
     private HomeViewModel mHomeViewModel;
     private ItemAdapter mItemAdapter;
-    private ArrayList<Item> mItemList;
+    private List<Item> mItemList;
 
     /**
      * 画面遷移のためのIntent発行

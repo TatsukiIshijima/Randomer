@@ -45,36 +45,28 @@ public class LocalAccess {
         mItemDao.insert(item);
     }
 
+    public void delete(Item item) {
+    }
+
     /**
      * 全アイテムの取得
      * @return itemList
      */
-    public ArrayList<com.io.tatsuki.randomer.Models.Item> fetchItemList() {
-        ArrayList<com.io.tatsuki.randomer.Models.Item> itemArrayList = new ArrayList<>();
+    public List<Item> fetchItemList() {
         List<Item> itemList = mItemDao.loadAll();
-        for (Item item : itemList) {
-            com.io.tatsuki.randomer.Models.Item itemModel = new com.io.tatsuki.randomer.Models.Item(
-                    item.getCategory(),
-                    item.getTitle(),
-                    item.getUsetId(),
-                    item.getPassword(),
-                    item.getUrl(),
-                    item.getImagePath());
-            itemArrayList.add(itemModel);
-        }
-        return itemArrayList;
+        return itemList;
     }
 
     /**
      * カテゴリーリストの取得
      * @return
      */
-    public ArrayList<String> fetchCategoryList() {
-        ArrayList<String> categories = new ArrayList<>();
-        List<Item> categoryList = mItemDao.queryBuilder().orderDesc(ItemDao.Properties.Category).build().list();
-        for (Item categoryItem : categoryList) {
-            categories.add(categoryItem.getCategory());
+    public List<String> fetchCategoryList() {
+        List<String> categoryList = new ArrayList<>();
+        List<Item> categoryItemList = mItemDao.queryBuilder().orderDesc(ItemDao.Properties.Category).list();
+        for(Item item : categoryItemList) {
+            categoryList.add(item.getCategory());
         }
-        return categories;
+        return categoryList;
     }
 }

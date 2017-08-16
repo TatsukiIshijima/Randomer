@@ -14,15 +14,15 @@ import android.widget.Spinner;
 
 import com.io.tatsuki.randomer.Events.ButtonEvent;
 import com.io.tatsuki.randomer.Events.TransitionEvent;
-import com.io.tatsuki.randomer.Models.Item;
+
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.Repositories.LocalAccess;
-import com.io.tatsuki.randomer.Repositories.db.ItemDao;
+import com.io.tatsuki.randomer.Repositories.db.Item;
 import com.io.tatsuki.randomer.Utils.GenerateUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 登録画面のViewModel
@@ -43,7 +43,7 @@ public class RegisterViewModel {
     public ObservableBoolean mUpperToggle = new ObservableBoolean();
     public ObservableBoolean mLowerToggle = new ObservableBoolean();
     public ObservableBoolean mSymbolToggle = new ObservableBoolean();
-    private ArrayList<String> mCategoryList = new ArrayList<>();
+    private List<String> mCategoryList;
     private Context mContext;
     private LocalAccess mLocalAccess;
 
@@ -85,7 +85,7 @@ public class RegisterViewModel {
         mPasswordLengthTitle.set("パスワード桁数 : " + mPasswordLength.get());
     }
 
-    public ArrayList<String> getCategoryList() {
+    public List<String> getCategoryList() {
         // DBから読み込む
         mCategoryList = mLocalAccess.fetchCategoryList();
         return mCategoryList;
@@ -145,7 +145,7 @@ public class RegisterViewModel {
             case R.id.activity_register_save_button:
                 Log.d(TAG, "Save Button Clicked");
                 // イベントにItemも渡して通知
-                Item item = new Item(mCategory.get(), mTitle.get(), mUserId.get(), mPassword.get(), mUrl.get(), null);
+                Item item = new Item(null, mCategory.get(), mTitle.get(), mUserId.get(), mPassword.get(), mUrl.get(), null);
                 EventBus.getDefault().post(new TransitionEvent(TransitionEvent.TRANS_TO_HOME_FLAG, item));
                 break;
             // 数字トグルボタン
@@ -196,16 +196,7 @@ public class RegisterViewModel {
      * 保存
      */
     public void save(Item item) {
-        com.io.tatsuki.randomer.Repositories.db.Item itemToDB = new com.io.tatsuki.randomer.Repositories.db.Item(
-                null,
-                item.getMCategory(),
-                item.getMTitle(),
-                item.getMUserId(),
-                item.getMPassword(),
-                item.getMUrl(),
-                item.getMImagePath()
-        );
-        mLocalAccess.save(itemToDB);
+        mLocalAccess.save(item);
     }
 
     /**

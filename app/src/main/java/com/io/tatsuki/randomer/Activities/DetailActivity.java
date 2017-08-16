@@ -1,6 +1,5 @@
 package com.io.tatsuki.randomer.Activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,8 +12,9 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.io.tatsuki.randomer.Events.TransitionEvent;
-import com.io.tatsuki.randomer.Models.Item;
+
 import com.io.tatsuki.randomer.R;
+import com.io.tatsuki.randomer.Repositories.db.Item;
 import com.io.tatsuki.randomer.Utils.ActivityForResultConstant;
 import com.io.tatsuki.randomer.ViewModels.DetailViewModel;
 import com.io.tatsuki.randomer.databinding.ActivityDetailBinding;
@@ -122,7 +122,7 @@ public class DetailActivity extends AppCompatActivity {
             mDetailViewModel.setPassword();
             mDetailViewModel.setUrl();
             // TODO:以下が反映されない
-            mBinding.activityDetailToolbar.setTitle(mItem.getMCategory());
+            mBinding.activityDetailToolbar.setTitle(mItem.getCategory());
         }
     }
 

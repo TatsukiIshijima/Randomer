@@ -9,13 +9,14 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.io.tatsuki.randomer.Events.TransitionEvent;
-import com.io.tatsuki.randomer.Models.Item;
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.Repositories.LocalAccess;
+import com.io.tatsuki.randomer.Repositories.db.Item;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ホーム画面のViewModel
@@ -88,8 +89,8 @@ public class HomeViewModel {
      * DBからアイテムリストの取得
      * @return itemArrayList
      */
-    public ArrayList<Item> getItemList() {
-        ArrayList<Item> itemArrayList = mLocalAccess.fetchItemList();
-        return itemArrayList;
+    public List<Item> getItemList() {
+        List<Item> itemList = mLocalAccess.fetchItemList();
+        return itemList;
     }
 }

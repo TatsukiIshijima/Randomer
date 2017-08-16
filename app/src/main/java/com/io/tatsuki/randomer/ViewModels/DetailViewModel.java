@@ -4,10 +4,10 @@ import android.databinding.ObservableField;
 import android.util.Log;
 import android.view.View;
 
-import com.io.tatsuki.randomer.Activities.RegisterActivity;
 import com.io.tatsuki.randomer.Events.TransitionEvent;
-import com.io.tatsuki.randomer.Models.Item;
+
 import com.io.tatsuki.randomer.R;
+import com.io.tatsuki.randomer.Repositories.db.Item;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -30,19 +30,19 @@ public class DetailViewModel {
     }
 
     public void setTitle() {
-        mTitle.set(mItem.getMTitle());
+        mTitle.set(mItem.getTitle());
     }
 
     public void setUserId() {
-        mUserId.set(mItem.getMUserId());
+        mUserId.set(mItem.getUsetId());
     }
 
     public void setPassword() {
-        mPassword.set(mItem.getMPassword());
+        mPassword.set(mItem.getPassword());
     }
 
     public void setUrl() {
-        mUrl.set(mItem.getMUrl());
+        mUrl.set(mItem.getUrl());
     }
 
     /**

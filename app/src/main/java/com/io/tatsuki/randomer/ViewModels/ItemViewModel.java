@@ -2,9 +2,10 @@ package com.io.tatsuki.randomer.ViewModels;
 
 import android.databinding.ObservableField;
 
-import com.io.tatsuki.randomer.Models.Item;
 
-import java.util.ArrayList;
+import com.io.tatsuki.randomer.Repositories.db.Item;
+
+import java.util.List;
 
 import lombok.NoArgsConstructor;
 
@@ -16,11 +17,11 @@ public class ItemViewModel {
 
     private static final String TAG = ItemViewModel.class.getSimpleName();
 
-    private ArrayList<Item> items;
+    private List<Item> itemList;
     public ObservableField<String> title = new ObservableField<>();
 
-    public ItemViewModel(ArrayList<Item> items) {
-        this.items = items;
+    public ItemViewModel(List<Item> items) {
+        this.itemList = items;
     }
 
     /**
@@ -28,6 +29,6 @@ public class ItemViewModel {
      * @param item
      */
     public void setItemTitle(Item item) {
-        title.set(item.getMTitle());
+        title.set(item.getTitle());
     }
 }
