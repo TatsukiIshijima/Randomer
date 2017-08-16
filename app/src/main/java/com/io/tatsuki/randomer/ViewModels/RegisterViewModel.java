@@ -61,21 +61,6 @@ public class RegisterViewModel {
         mCategory.set(category);
     }
 
-    /**
-     * 編集時に登録されているカテゴリーの位置を取得
-     * @param category
-     * @return position
-     */
-    public int getCategoryPosition(String category) {
-        int position = -1;
-        for (int i=0; i<mCategoryList.size(); i++) {
-            if (mCategoryList.get(i).equals(category)) {
-                position = i;
-            }
-        }
-        return position;
-    }
-
     public void setTitle(String title) {
         mTitle.set(title);
     }
@@ -101,9 +86,14 @@ public class RegisterViewModel {
     }
 
     public List<String> getCategoryList() {
-        // DBから読み込む
-        mCategoryList = mLocalAccess.fetchCategoryList();
         return mCategoryList;
+    }
+
+    /**
+     * DBからカテゴリーを読み込む
+     */
+    public void loadCategoryList() {
+        mCategoryList = mLocalAccess.fetchCategoryList();
     }
 
     /**
@@ -112,6 +102,21 @@ public class RegisterViewModel {
      */
     public void addCategory(String category) {
         mCategoryList.add(category);
+    }
+
+    /**
+     * 編集時に登録されているカテゴリーの位置を取得
+     * @param category
+     * @return position
+     */
+    public int getCategoryPosition(String category) {
+        int position = -1;
+        for (int i=0; i<mCategoryList.size(); i++) {
+            if (mCategoryList.get(i).equals(category)) {
+                position = i;
+            }
+        }
+        return position;
     }
 
     /**
