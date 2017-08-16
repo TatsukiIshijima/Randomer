@@ -67,8 +67,8 @@ public class RegisterActivity extends AppCompatActivity {
         mBinding.setRegisterViewModel(mRegisterViewModel);
 
         setViews();
-        initButtonState();
         setValue();
+        initButtonState();
     }
 
     @Override
@@ -232,11 +232,11 @@ public class RegisterActivity extends AppCompatActivity {
                 // Itemの受け渡し
                 fragment.setArguments(bundle);
                 fragment.show(fragmentManager, "show category fragment");
-
                 break;
             case TransitionEvent.BACK_CATEGORY_SELECT_TO_REGISTER_FLAG:
                 setResult(RESULT_OK);
                 finish();
+                break;
             default:
                 break;
         }
