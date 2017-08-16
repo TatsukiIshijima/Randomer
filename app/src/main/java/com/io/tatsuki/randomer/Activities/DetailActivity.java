@@ -54,7 +54,7 @@ public class DetailActivity extends AppCompatActivity {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 
         getItem();
-        mDetailViewModel = new DetailViewModel(mItem);
+        mDetailViewModel = new DetailViewModel(this, mItem);
         mBinding.setDetailViewModel(mDetailViewModel);
 
         setViews();
@@ -132,7 +132,7 @@ public class DetailActivity extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                mDetailViewModel.delete();
+                mDetailViewModel.delete(mItem);
                 setResult(RESULT_OK);
                 finish();
             }

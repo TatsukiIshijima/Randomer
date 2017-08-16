@@ -46,6 +46,7 @@ public class LocalAccess {
     }
 
     public void delete(Item item) {
+        mItemDao.delete(item);
     }
 
     /**

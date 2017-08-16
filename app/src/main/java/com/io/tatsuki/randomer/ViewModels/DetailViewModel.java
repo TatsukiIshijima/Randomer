@@ -1,5 +1,6 @@
 package com.io.tatsuki.randomer.ViewModels;
 
+import android.content.Context;
 import android.databinding.ObservableField;
 import android.util.Log;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.View;
 import com.io.tatsuki.randomer.Events.TransitionEvent;
 
 import com.io.tatsuki.randomer.R;
+import com.io.tatsuki.randomer.Repositories.LocalAccess;
 import com.io.tatsuki.randomer.Repositories.db.Item;
 
 import org.greenrobot.eventbus.EventBus;
@@ -24,10 +26,15 @@ public class DetailViewModel {
     public ObservableField<String> mUserId = new ObservableField<>();
     public ObservableField<String> mPassword = new ObservableField<>();
     public ObservableField<String> mUrl = new ObservableField<>();
+    private Context mContext;
     private Item mItem;
+    private LocalAccess mLocalAccess;
 
-    public DetailViewModel(Item item) {
+    public DetailViewModel(Context context, Item item) {
+        this.mContext = context;
         this.mItem = item;
+        mLocalAccess = new LocalAccess(context);
+        mLocalAccess.setupDB();
     }
 
     public void setCategory() {
@@ -74,7 +81,7 @@ public class DetailViewModel {
     /**
      * 削除
      */
-    public void delete() {
-
+    public void delete(Item item) {
+        mLocalAccess.delete(item);
     }
 }
