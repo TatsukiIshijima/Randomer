@@ -29,10 +29,12 @@ public class DetailActivity extends AppCompatActivity {
 
     private static final String TAG = DetailActivity.class.getSimpleName();
     private static final String ITEM_KEY = "ITEM_KEY_DETAIL";
+    private static final String MESSAGE = "MESSAGE";
 
     private ActivityDetailBinding mBinding;
     private DetailViewModel mDetailViewModel;
     private Item mItem;
+    private String mMessage;
 
     /**
      * 画面遷移のためのIntent発行
@@ -48,12 +50,22 @@ public class DetailActivity extends AppCompatActivity {
         return intent;
     }
 
+    public static Intent detailIntent(@NonNull Context context, Item item, String message) {
+        Intent intent = new Intent(context, DetailActivity.class);
+        Bundle args = new Bundle();
+        args.putSerializable(ITEM_KEY, item);
+        intent.putExtras(args);
+        intent.putExtra(MESSAGE, message);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 
         getItem();
+        showMessage();
         mDetailViewModel = new DetailViewModel(this, mItem);
         mBinding.setDetailViewModel(mDetailViewModel);
 
@@ -78,18 +90,6 @@ public class DetailActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case ActivityForResultConstant.EDIT_REQUEST:
-                if (resultCode == RESULT_OK) {
-                    Snackbar.make(mBinding.activityDetailCoordinateLayout, "編集しました。", Snackbar.LENGTH_SHORT).show();
-                }
-                break;
-        }
-    }
-
     /**
      * 各Viewの設定
      */
@@ -99,13 +99,22 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     /**
-     * 受け渡しされたItemを受け取る
-     * @return  item
+     * 受け渡しされたItem, Messageを受け取る
      */
     private void getItem() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             mItem = (Item) bundle.getSerializable(ITEM_KEY);
+            mMessage = bundle.getString(MESSAGE);
+        }
+    }
+
+    /**
+     * スナックバーでの編集メッセージ表示
+     */
+    private void showMessage() {
+        if (mMessage != null) {
+            Snackbar.make(mBinding.activityDetailCoordinateLayout, mMessage, Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -155,7 +164,7 @@ public class DetailActivity extends AppCompatActivity {
         switch (event.getTransitionFlag()) {
             case TransitionEvent.TRANS_TO_REGISTER_FLAG:
                 Intent registerIntent = RegisterActivity.registerIntent(this, mItem, 1);
-                startActivityForResult(registerIntent, ActivityForResultConstant.EDIT_REQUEST);
+                startActivity(registerIntent);
                 break;
             case TransitionEvent.TRANS_TO_HOME_FLAG:
                 showDeleteAlert();

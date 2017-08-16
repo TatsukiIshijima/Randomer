@@ -54,20 +54,23 @@ public class CategorySelectFragment extends DialogFragment {
                 Log.d(TAG, "onItemClick : " + i);
                 // ImagePathの取得
                 item.setImagePath("path" + i);
+
                 // 詳細画面からであれば更新
                 if (mFlag == 1) {
                     // 更新
                     Log.d(TAG, "update : " + item.getId());
                     registerViewModel.update(item);
+                    // RegisterActivityに通知し、スタッククリアと更新したItemの送信
+                    EventBus.getDefault().post(new TransitionEvent(TransitionEvent.BACK_CATEGORY_SELECT_TO_REGISTER_FLAG, item));
                 }
                 // ホーム画面からであれば新規登録
                 else {
                     // 保存の実行
                     Log.d(TAG, "save : " + item.getId());
                     registerViewModel.save(item);
+                    // RegisterActivityに通知し、ホーム画面に戻る
+                    EventBus.getDefault().post(new TransitionEvent(TransitionEvent.BACK_CATEGORY_SELECT_TO_REGISTER_FLAG));
                 }
-                // RegisterActivityに通知
-                EventBus.getDefault().post(new TransitionEvent(TransitionEvent.BACK_CATEGORY_SELECT_TO_REGISTER_FLAG));
                 alertDialog.cancel();
             }
         });

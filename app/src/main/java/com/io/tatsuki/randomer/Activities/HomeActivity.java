@@ -35,10 +35,12 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
+    private static final String ITEM_KEY = "ITEM_KEY_HOME";
 
     private ActivityHomeBinding mBinding;
     private HomeViewModel mHomeViewModel;
     private ItemAdapter mItemAdapter;
+    private Item mItem;
     private List<Item> mItemList;
 
     /**
@@ -48,6 +50,14 @@ public class HomeActivity extends AppCompatActivity {
      */
     public static Intent homeIntent(@NonNull Context context) {
         Intent intent = new Intent(context, HomeActivity.class);
+        return intent;
+    }
+
+    public static Intent homeIntent(@NonNull Context context, Item item) {
+        Intent intent = new Intent(context, HomeActivity.class);
+        Bundle args = new Bundle();
+        args.putSerializable(ITEM_KEY, item);
+        intent.putExtras(args);
         return intent;
     }
 
@@ -62,6 +72,13 @@ public class HomeActivity extends AppCompatActivity {
 
         setViews();
         setListAndAdapter();
+
+        getItem();
+        if (mItem != null) {
+            // 更新し、登録画面→ホーム画面と遷移し、Itemが送られている場合、
+            // 詳細画面に遷移する
+            startActivity(DetailActivity.detailIntent(this, mItem, "編集しました。"));
+        }
     }
 
     @Override
@@ -114,6 +131,13 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getItem() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            mItem = (Item) bundle.getSerializable(ITEM_KEY);
+        }
     }
 
     /**

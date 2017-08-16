@@ -257,8 +257,17 @@ public class RegisterActivity extends AppCompatActivity {
                 fragment.show(fragmentManager, "show category fragment");
                 break;
             case TransitionEvent.BACK_CATEGORY_SELECT_TO_REGISTER_FLAG:
-                setResult(RESULT_OK);
-                finish();
+                if (event.getItem() != null) {
+                    Intent intent = HomeActivity.homeIntent(this, event.getItem());
+                    // スタック削除
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    // ホーム画面に更新したItemを渡し、遷移
+                    startActivity(intent);
+                } else {
+                    setResult(RESULT_OK);
+                    finish();
+                }
+
                 break;
             default:
                 break;
