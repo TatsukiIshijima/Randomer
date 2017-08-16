@@ -35,10 +35,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     private static final String TAG = RegisterActivity.class.getSimpleName();
     public static final String ITEM_KEY = "ITEM_KEY_REGISTER";
+    public static final String EDIT_OR_SAVE_FLAG = "EDIT_OR_SAVE_FLAG";
 
     private ActivityRegisterBinding mBinding;
     private RegisterViewModel mRegisterViewModel;
     private ArrayAdapter mArrayAdapter;
+    private int mFlag = 0;                  // 画面遷移元のフラグ
 
     /**
      * 画面遷移のためのIntent発行
@@ -54,6 +56,22 @@ public class RegisterActivity extends AppCompatActivity {
         Intent intent = new Intent(context, RegisterActivity.class);
         Bundle args = new Bundle();
         args.putSerializable(ITEM_KEY, item);
+        intent.putExtras(args);
+        return intent;
+    }
+
+    /**
+     * Intent発行
+     * @param context
+     * @param item
+     * @param flag  詳細画面からの遷移 : 1
+     * @return  intent
+     */
+    public static Intent registerIntent(@NonNull Context context, Item item, int flag) {
+        Intent intent = new Intent(context, RegisterActivity.class);
+        Bundle args = new Bundle();
+        args.putSerializable(ITEM_KEY, item);
+        args.putInt(EDIT_OR_SAVE_FLAG, flag);
         intent.putExtras(args);
         return intent;
     }
@@ -120,6 +138,8 @@ public class RegisterActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             Item item = (Item) bundle.getSerializable(ITEM_KEY);
+            // 遷移元のフラグを受け取る
+            mFlag = bundle.getInt(EDIT_OR_SAVE_FLAG);
             return item;
         } else {
             return null;
@@ -133,6 +153,7 @@ public class RegisterActivity extends AppCompatActivity {
         Item item = getItem();
         if (item != null) {
             mBinding.activityRegisterSpinner.setSelection(mRegisterViewModel.getCategoryPosition(item.getCategory()));
+            mRegisterViewModel.setKey(item.getId());
             mRegisterViewModel.setTitle(item.getTitle());
             mRegisterViewModel.setUserId(item.getUsetId());
             mRegisterViewModel.setPassword(item.getPassword());
@@ -227,6 +248,8 @@ public class RegisterActivity extends AppCompatActivity {
                 // カテゴリーアイコンリスト表示
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(ITEM_KEY, event.getItem());
+                // 遷移元のフラグを送る
+                bundle.putInt(EDIT_OR_SAVE_FLAG, mFlag);
                 android.app.FragmentManager fragmentManager = getFragmentManager();
                 CategorySelectFragment fragment = new CategorySelectFragment();
                 // Itemの受け渡し

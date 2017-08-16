@@ -55,10 +55,10 @@ public class LocalAccess {
     }
 
     /**
-     * データの編集
+     * データの更新
      * @param item
      */
-    public void edit(Item item) {
+    public void update(Item item) {
         mItemDao.update(item);
     }
 

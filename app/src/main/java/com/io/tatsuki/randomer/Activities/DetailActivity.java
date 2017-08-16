@@ -154,7 +154,7 @@ public class DetailActivity extends AppCompatActivity {
     public void subScribeTransitionEvent(TransitionEvent event) {
         switch (event.getTransitionFlag()) {
             case TransitionEvent.TRANS_TO_REGISTER_FLAG:
-                Intent registerIntent = RegisterActivity.registerIntent(this, mItem);
+                Intent registerIntent = RegisterActivity.registerIntent(this, mItem, 1);
                 startActivityForResult(registerIntent, ActivityForResultConstant.EDIT_REQUEST);
                 break;
             case TransitionEvent.TRANS_TO_HOME_FLAG:
