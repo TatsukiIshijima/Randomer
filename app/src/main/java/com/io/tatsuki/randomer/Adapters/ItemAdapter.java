@@ -33,10 +33,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     /**
      * コンストラクタ
      * @param context
+     */
+    public ItemAdapter(Context context) {
+        this.mContext = context;
+    }
+
+    /**
+     * アイテムリストのセット
      * @param items
      */
-    public ItemAdapter(Context context , ArrayList<Item> items) {
-        this.mContext = context;
+    public void setItemList(ArrayList<Item> items) {
         this.mItems = items;
     }
 
