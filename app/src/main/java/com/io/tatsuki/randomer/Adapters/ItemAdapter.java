@@ -1,6 +1,5 @@
 package com.io.tatsuki.randomer.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
@@ -8,16 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.io.tatsuki.randomer.Activities.DetailActivity;
 import com.io.tatsuki.randomer.Events.TransitionEvent;
-import com.io.tatsuki.randomer.Models.Item;
 import com.io.tatsuki.randomer.R;
+import com.io.tatsuki.randomer.Repositories.db.Item;
 import com.io.tatsuki.randomer.ViewModels.ItemViewModel;
 import com.io.tatsuki.randomer.databinding.ItemBinding;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ホーム画面のリストアダプター
@@ -28,15 +26,21 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     private static final String TAG = ItemAdapter.class.getSimpleName();
     private Context mContext;
     private ItemBinding mBinding;
-    private ArrayList<Item> mItems;
+    private List<Item> mItems;
 
     /**
      * コンストラクタ
      * @param context
+     */
+    public ItemAdapter(Context context) {
+        this.mContext = context;
+    }
+
+    /**
+     * アイテムリストのセット
      * @param items
      */
-    public ItemAdapter(Context context , ArrayList<Item> items) {
-        this.mContext = context;
+    public void setItemList(List<Item> items) {
         this.mItems = items;
     }
 

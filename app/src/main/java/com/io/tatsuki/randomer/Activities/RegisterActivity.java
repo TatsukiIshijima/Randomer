@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,9 +19,9 @@ import android.widget.EditText;
 import com.io.tatsuki.randomer.Events.ButtonEvent;
 import com.io.tatsuki.randomer.Events.TransitionEvent;
 import com.io.tatsuki.randomer.Fragments.CategorySelectFragment;
-import com.io.tatsuki.randomer.Models.Item;
+
 import com.io.tatsuki.randomer.R;
-import com.io.tatsuki.randomer.Utils.ActivityForResultConstant;
+import com.io.tatsuki.randomer.Repositories.db.Item;
 import com.io.tatsuki.randomer.ViewModels.RegisterViewModel;
 import com.io.tatsuki.randomer.databinding.ActivityRegisterBinding;
 
@@ -64,12 +63,12 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_register);
 
-        mRegisterViewModel = new RegisterViewModel();
+        mRegisterViewModel = new RegisterViewModel(this);
         mBinding.setRegisterViewModel(mRegisterViewModel);
 
         setViews();
-        initButtonState();
         setValue();
+        initButtonState();
     }
 
     @Override
@@ -106,6 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
         mBinding.executePendingBindings();
         mBinding.activityRegisterSeekbar.setOnSeekBarChangeListener(mRegisterViewModel.seekBarChangeListener());
         // Spinner
+        mRegisterViewModel.loadCategoryList();
         mArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mRegisterViewModel.getCategoryList());
         mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mBinding.activityRegisterSpinner.setAdapter(mArrayAdapter);
@@ -126,14 +126,17 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 値の設定
+     */
     private void setValue() {
         Item item = getItem();
         if (item != null) {
-            // TODO:カテゴリーのセット
-            mRegisterViewModel.setTitle(item.getMTitle());
-            mRegisterViewModel.setUserId(item.getMUserId());
-            mRegisterViewModel.setPassword(item.getMPassword());
-            mRegisterViewModel.setUrl(item.getMUrl());
+            mBinding.activityRegisterSpinner.setSelection(mRegisterViewModel.getCategoryPosition(item.getCategory()));
+            mRegisterViewModel.setTitle(item.getTitle());
+            mRegisterViewModel.setUserId(item.getUsetId());
+            mRegisterViewModel.setPassword(item.getPassword());
+            mRegisterViewModel.setUrl(item.getUrl());
         }
     }
 
@@ -163,10 +166,18 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 EditText editText = (EditText) view.findViewById(R.id.alert_add_category_edit);
                 if (editText.getText().length() != 0) {
+                    for (String category : mRegisterViewModel.getCategoryList()) {
+                        if (category.equals(editText.getText().toString())) {
+                            Snackbar.make(mBinding.activityRegisterCoordinateLayout, "追加済みです。", Snackbar.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
                     mRegisterViewModel.addCategory(editText.getText().toString());
                     // リスト更新
                     mArrayAdapter.notifyDataSetChanged();
                     Snackbar.make(mBinding.activityRegisterCoordinateLayout, "追加しました。", Snackbar.LENGTH_SHORT).show();
+                    // スピナーで選択済みになるよう設定
+                    mBinding.activityRegisterSpinner.setSelection(mRegisterViewModel.getCategoryList().size());
                 } else {
                     Snackbar.make(mBinding.activityRegisterCoordinateLayout, "追加できませんでした。", Snackbar.LENGTH_SHORT).show();
                 }
@@ -221,11 +232,11 @@ public class RegisterActivity extends AppCompatActivity {
                 // Itemの受け渡し
                 fragment.setArguments(bundle);
                 fragment.show(fragmentManager, "show category fragment");
-
                 break;
             case TransitionEvent.BACK_CATEGORY_SELECT_TO_REGISTER_FLAG:
                 setResult(RESULT_OK);
                 finish();
+                break;
             default:
                 break;
         }

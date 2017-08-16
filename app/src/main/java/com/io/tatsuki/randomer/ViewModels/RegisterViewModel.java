@@ -1,5 +1,6 @@
 package com.io.tatsuki.randomer.ViewModels;
 
+import android.content.Context;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
@@ -13,13 +14,15 @@ import android.widget.Spinner;
 
 import com.io.tatsuki.randomer.Events.ButtonEvent;
 import com.io.tatsuki.randomer.Events.TransitionEvent;
-import com.io.tatsuki.randomer.Models.Item;
+
 import com.io.tatsuki.randomer.R;
+import com.io.tatsuki.randomer.Repositories.LocalAccess;
+import com.io.tatsuki.randomer.Repositories.db.Item;
 import com.io.tatsuki.randomer.Utils.GenerateUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 登録画面のViewModel
@@ -40,8 +43,19 @@ public class RegisterViewModel {
     public ObservableBoolean mUpperToggle = new ObservableBoolean();
     public ObservableBoolean mLowerToggle = new ObservableBoolean();
     public ObservableBoolean mSymbolToggle = new ObservableBoolean();
+    private List<String> mCategoryList;
+    private Context mContext;
+    private LocalAccess mLocalAccess;
 
-    private ArrayList<String> mCategoryList = new ArrayList<>();
+    /**
+     * コンストラクタ
+     * @param context
+     */
+    public RegisterViewModel(Context context) {
+        this.mContext = context;
+        mLocalAccess = new LocalAccess(context);
+        mLocalAccess.setupDB();
+    }
 
     public void setCategory(String category) {
         mCategory.set(category);
@@ -71,9 +85,15 @@ public class RegisterViewModel {
         mPasswordLengthTitle.set("パスワード桁数 : " + mPasswordLength.get());
     }
 
-    // TODO:DBから読み込む用にする
-    public ArrayList<String> getCategoryList() {
+    public List<String> getCategoryList() {
         return mCategoryList;
+    }
+
+    /**
+     * DBからカテゴリーを読み込む
+     */
+    public void loadCategoryList() {
+        mCategoryList = mLocalAccess.fetchCategoryList();
     }
 
     /**
@@ -82,6 +102,21 @@ public class RegisterViewModel {
      */
     public void addCategory(String category) {
         mCategoryList.add(category);
+    }
+
+    /**
+     * 編集時に登録されているカテゴリーの位置を取得
+     * @param category
+     * @return position
+     */
+    public int getCategoryPosition(String category) {
+        int position = -1;
+        for (int i=0; i<mCategoryList.size(); i++) {
+            if (mCategoryList.get(i).equals(category)) {
+                position = i;
+            }
+        }
+        return position;
     }
 
     /**
@@ -99,8 +134,8 @@ public class RegisterViewModel {
      * 保存ボタンの活性・非活性の切り替え
      */
     private void setSaveButtonState() {
-        if (mTitle.get() != null && mUserId.get() != null && mPassword.get() != null) {
-            if (mTitle.get().length() > 0 && mUserId.get().length() > 0 && mPassword.get().length() > 0) {
+        if (mCategory.get() != null && mTitle.get() != null && mUserId.get() != null && mPassword.get() != null) {
+            if (!mCategory.get().isEmpty() && mTitle.get().length() > 0 && mUserId.get().length() > 0 && mPassword.get().length() > 0) {
                 EventBus.getDefault().post(new ButtonEvent(ButtonEvent.saveButtonFlag, true));
             } else {
                 EventBus.getDefault().post(new ButtonEvent(ButtonEvent.saveButtonFlag, false));
@@ -130,8 +165,7 @@ public class RegisterViewModel {
             case R.id.activity_register_save_button:
                 Log.d(TAG, "Save Button Clicked");
                 // イベントにItemも渡して通知
-                // TODO:カテゴリーも取得できるように修正
-                Item item = new Item(mCategory.get(), mTitle.get(), mUserId.get(), mPassword.get(), mUrl.get(), null);
+                Item item = new Item(null, mCategory.get(), mTitle.get(), mUserId.get(), mPassword.get(), mUrl.get(), null);
                 EventBus.getDefault().post(new TransitionEvent(TransitionEvent.TRANS_TO_HOME_FLAG, item));
                 break;
             // 数字トグルボタン
@@ -182,12 +216,7 @@ public class RegisterViewModel {
      * 保存
      */
     public void save(Item item) {
-        Log.d(TAG, "Category : " + item.getMCategory());
-        Log.d(TAG, "Title : " + item.getMTitle());
-        Log.d(TAG, "UserID : " + item.getMUserId());
-        Log.d(TAG, "Password : " + item.getMPassword());
-        Log.d(TAG, "URL : " + item.getMUrl());
-        Log.d(TAG, "ImagePath : " + item.getMImagePath());
+        mLocalAccess.save(item);
     }
 
     /**

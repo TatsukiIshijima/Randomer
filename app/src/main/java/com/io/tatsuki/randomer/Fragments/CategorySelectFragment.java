@@ -11,8 +11,9 @@ import android.widget.GridView;
 
 import com.io.tatsuki.randomer.Adapters.CategoryItemAdapter;
 import com.io.tatsuki.randomer.Events.TransitionEvent;
-import com.io.tatsuki.randomer.Models.Item;
+
 import com.io.tatsuki.randomer.R;
+import com.io.tatsuki.randomer.Repositories.db.Item;
 import com.io.tatsuki.randomer.ViewModels.RegisterViewModel;
 
 import org.greenrobot.eventbus.EventBus;
@@ -34,7 +35,7 @@ public class CategorySelectFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         builder = new AlertDialog.Builder(getActivity());
 
-        registerViewModel = new RegisterViewModel();
+        registerViewModel = new RegisterViewModel(getActivity());
         final Item item = getItem();
 
         alertDialog = builder.create();
@@ -50,7 +51,7 @@ public class CategorySelectFragment extends DialogFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.d(TAG, "onItemClick : " + i);
                 // ImagePathの取得
-                item.setMImagePath("path" + i);
+                item.setImagePath("path" + i);
                 // 保存の実行
                 registerViewModel.save(item);
                 // RegisterActivityに通知

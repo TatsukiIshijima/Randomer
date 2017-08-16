@@ -1,6 +1,7 @@
 package com.io.tatsuki.randomer.Events;
 
-import com.io.tatsuki.randomer.Models.Item;
+
+import com.io.tatsuki.randomer.Repositories.db.Item;
 
 import lombok.Getter;
 

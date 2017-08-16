@@ -1,13 +1,15 @@
 package com.io.tatsuki.randomer.ViewModels;
 
+import android.content.Context;
 import android.databinding.ObservableField;
 import android.util.Log;
 import android.view.View;
 
-import com.io.tatsuki.randomer.Activities.RegisterActivity;
 import com.io.tatsuki.randomer.Events.TransitionEvent;
-import com.io.tatsuki.randomer.Models.Item;
+
 import com.io.tatsuki.randomer.R;
+import com.io.tatsuki.randomer.Repositories.LocalAccess;
+import com.io.tatsuki.randomer.Repositories.db.Item;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -19,30 +21,40 @@ public class DetailViewModel {
 
     private static final String TAG = DetailViewModel.class.getSimpleName();
 
+    public ObservableField<String> mCategory = new ObservableField<>();
     public ObservableField<String> mTitle = new ObservableField<>();
     public ObservableField<String> mUserId = new ObservableField<>();
     public ObservableField<String> mPassword = new ObservableField<>();
     public ObservableField<String> mUrl = new ObservableField<>();
+    private Context mContext;
     private Item mItem;
+    private LocalAccess mLocalAccess;
 
-    public DetailViewModel(Item item) {
+    public DetailViewModel(Context context, Item item) {
+        this.mContext = context;
         this.mItem = item;
+        mLocalAccess = new LocalAccess(context);
+        mLocalAccess.setupDB();
+    }
+
+    public void setCategory() {
+        mCategory.set(mItem.getCategory());
     }
 
     public void setTitle() {
-        mTitle.set(mItem.getMTitle());
+        mTitle.set(mItem.getTitle());
     }
 
     public void setUserId() {
-        mUserId.set(mItem.getMUserId());
+        mUserId.set(mItem.getUsetId());
     }
 
     public void setPassword() {
-        mPassword.set(mItem.getMPassword());
+        mPassword.set(mItem.getPassword());
     }
 
     public void setUrl() {
-        mUrl.set(mItem.getMUrl());
+        mUrl.set(mItem.getUrl());
     }
 
     /**
@@ -69,7 +81,7 @@ public class DetailViewModel {
     /**
      * 削除
      */
-    public void delete() {
-
+    public void delete(Item item) {
+        mLocalAccess.delete(item);
     }
 }

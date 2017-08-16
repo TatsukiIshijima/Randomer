@@ -1,6 +1,5 @@
 package com.io.tatsuki.randomer.Activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,8 +12,9 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.io.tatsuki.randomer.Events.TransitionEvent;
-import com.io.tatsuki.randomer.Models.Item;
+
 import com.io.tatsuki.randomer.R;
+import com.io.tatsuki.randomer.Repositories.db.Item;
 import com.io.tatsuki.randomer.Utils.ActivityForResultConstant;
 import com.io.tatsuki.randomer.ViewModels.DetailViewModel;
 import com.io.tatsuki.randomer.databinding.ActivityDetailBinding;
@@ -53,8 +53,8 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 
-        mItem = getItem();
-        mDetailViewModel = new DetailViewModel(mItem);
+        getItem();
+        mDetailViewModel = new DetailViewModel(this, mItem);
         mBinding.setDetailViewModel(mDetailViewModel);
 
         setViews();
@@ -102,13 +102,10 @@ public class DetailActivity extends AppCompatActivity {
      * 受け渡しされたItemを受け取る
      * @return  item
      */
-    private Item getItem() {
+    private void getItem() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            Item item = (Item) bundle.getSerializable(ITEM_KEY);
-            return item;
-        } else {
-            return null;
+            mItem = (Item) bundle.getSerializable(ITEM_KEY);
         }
     }
 
@@ -117,12 +114,11 @@ public class DetailActivity extends AppCompatActivity {
      */
     private void setValue() {
         if (mItem != null) {
+            mDetailViewModel.setCategory();
             mDetailViewModel.setTitle();
             mDetailViewModel.setUserId();
             mDetailViewModel.setPassword();
             mDetailViewModel.setUrl();
-            // TODO:以下が反映されない
-            mBinding.activityDetailToolbar.setTitle(mItem.getMCategory());
         }
     }
 
@@ -136,7 +132,7 @@ public class DetailActivity extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                mDetailViewModel.delete();
+                mDetailViewModel.delete(mItem);
                 setResult(RESULT_OK);
                 finish();
             }

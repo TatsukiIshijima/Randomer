@@ -1,6 +1,5 @@
 package com.io.tatsuki.randomer.Activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -18,8 +17,9 @@ import android.view.MenuItem;
 
 import com.io.tatsuki.randomer.Adapters.ItemAdapter;
 import com.io.tatsuki.randomer.Events.TransitionEvent;
-import com.io.tatsuki.randomer.Models.Item;
+
 import com.io.tatsuki.randomer.R;
+import com.io.tatsuki.randomer.Repositories.db.Item;
 import com.io.tatsuki.randomer.Utils.ActivityForResultConstant;
 import com.io.tatsuki.randomer.ViewModels.HomeViewModel;
 import com.io.tatsuki.randomer.databinding.ActivityHomeBinding;
@@ -27,7 +27,7 @@ import com.io.tatsuki.randomer.databinding.ActivityHomeBinding;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  *  ホーム画面
@@ -38,6 +38,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private ActivityHomeBinding mBinding;
     private HomeViewModel mHomeViewModel;
+    private ItemAdapter mItemAdapter;
+    private List<Item> mItemList;
 
     /**
      * 画面遷移のためのIntent発行
@@ -54,8 +56,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_home);
 
-        mHomeViewModel = new HomeViewModel();
+        mHomeViewModel = new HomeViewModel(this);
         mBinding.setHomeViewModel(mHomeViewModel);
+        mItemList = mHomeViewModel.getItemList();
 
         setViews();
         setListAndAdapter();
@@ -80,11 +83,13 @@ public class HomeActivity extends AppCompatActivity {
         switch (requestCode) {
             case ActivityForResultConstant.DELETE_REQUEST:
                 if (resultCode == RESULT_OK) {
+                    updateAdapter();
                     Snackbar.make(mBinding.activityHomeCoordinateLayout, "削除しました。", Snackbar.LENGTH_SHORT).show();
                 }
                 break;
             case ActivityForResultConstant.REGISTER_REQUEST:
                 if (resultCode == RESULT_OK) {
+                    updateAdapter();
                     Snackbar.make(mBinding.activityHomeCoordinateLayout, "保存しました。", Snackbar.LENGTH_SHORT).show();
                 }
                 break;
@@ -133,21 +138,18 @@ public class HomeActivity extends AppCompatActivity {
      * リスト表示の設定
      */
     private void setListAndAdapter() {
-        // ダミーデータ
-        ArrayList<Item> items = new ArrayList<>();
-        for (int i=0; i < 20; i++) {
-            Item item = new Item();
-            item.setMCategory("Category " + i);
-            item.setMTitle("Title " + i);
-            item.setMUserId("UserID " + i);
-            item.setMPassword("Password " + i);
-            item.setMUrl("http://www.hogehoge/0" + i);
-            items.add(item);
-        }
-
         mBinding.activityHomeRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        ItemAdapter mItemAdapter = new ItemAdapter(getApplicationContext(), items);
+        mItemAdapter = new ItemAdapter(getApplicationContext());
+        mItemAdapter.setItemList(mHomeViewModel.getItemList());
         mBinding.activityHomeRecyclerView.setAdapter(mItemAdapter);
+    }
+
+    /**
+     * アダプターの更新
+     */
+    private void updateAdapter() {
+        mItemAdapter.setItemList(mHomeViewModel.getItemList());
+        mItemAdapter.notifyDataSetChanged();
     }
 
     /**

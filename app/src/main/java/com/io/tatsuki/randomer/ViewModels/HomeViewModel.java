@@ -1,5 +1,6 @@
 package com.io.tatsuki.randomer.ViewModels;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v7.widget.SearchView;
@@ -9,8 +10,13 @@ import android.view.View;
 
 import com.io.tatsuki.randomer.Events.TransitionEvent;
 import com.io.tatsuki.randomer.R;
+import com.io.tatsuki.randomer.Repositories.LocalAccess;
+import com.io.tatsuki.randomer.Repositories.db.Item;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ホーム画面のViewModel
@@ -19,6 +25,15 @@ import org.greenrobot.eventbus.EventBus;
 public class HomeViewModel {
 
     private static final String TAG = HomeViewModel.class.getSimpleName();
+
+    private Context mContext;
+    private LocalAccess mLocalAccess;
+
+    public HomeViewModel(Context context) {
+        this.mContext = context;
+        mLocalAccess = new LocalAccess(context);
+        mLocalAccess.setupDB();
+    }
 
     /**
      * ボタンタップイベント
@@ -70,4 +85,12 @@ public class HomeViewModel {
         return itemSelectedListener;
     }
 
+    /**
+     * DBからアイテムリストの取得
+     * @return itemArrayList
+     */
+    public List<Item> getItemList() {
+        List<Item> itemList = mLocalAccess.fetchItemList();
+        return itemList;
+    }
 }
