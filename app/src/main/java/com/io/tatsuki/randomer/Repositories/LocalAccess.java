@@ -60,6 +60,7 @@ public class LocalAccess {
                     item.getPassword(),
                     item.getUrl(),
                     item.getImagePath());
+            itemArrayList.add(itemModel);
         }
         return itemArrayList;
     }
