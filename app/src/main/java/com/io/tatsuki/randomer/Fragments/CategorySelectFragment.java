@@ -34,7 +34,7 @@ public class CategorySelectFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         builder = new AlertDialog.Builder(getActivity());
 
-        registerViewModel = new RegisterViewModel();
+        registerViewModel = new RegisterViewModel(getActivity());
         final Item item = getItem();
 
         alertDialog = builder.create();

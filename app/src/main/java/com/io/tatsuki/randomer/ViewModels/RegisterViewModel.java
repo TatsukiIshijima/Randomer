@@ -1,5 +1,6 @@
 package com.io.tatsuki.randomer.ViewModels;
 
+import android.content.Context;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
@@ -15,6 +16,8 @@ import com.io.tatsuki.randomer.Events.ButtonEvent;
 import com.io.tatsuki.randomer.Events.TransitionEvent;
 import com.io.tatsuki.randomer.Models.Item;
 import com.io.tatsuki.randomer.R;
+import com.io.tatsuki.randomer.Repositories.LocalAccess;
+import com.io.tatsuki.randomer.Repositories.db.ItemDao;
 import com.io.tatsuki.randomer.Utils.GenerateUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -40,8 +43,19 @@ public class RegisterViewModel {
     public ObservableBoolean mUpperToggle = new ObservableBoolean();
     public ObservableBoolean mLowerToggle = new ObservableBoolean();
     public ObservableBoolean mSymbolToggle = new ObservableBoolean();
-
     private ArrayList<String> mCategoryList = new ArrayList<>();
+    private Context mContext;
+    private LocalAccess mLocalAccess;
+
+    /**
+     * コンストラクタ
+     * @param context
+     */
+    public RegisterViewModel(Context context) {
+        this.mContext = context;
+        mLocalAccess = new LocalAccess(context);
+        mLocalAccess.setupDB();
+    }
 
     public void setCategory(String category) {
         mCategory.set(category);
@@ -71,8 +85,9 @@ public class RegisterViewModel {
         mPasswordLengthTitle.set("パスワード桁数 : " + mPasswordLength.get());
     }
 
-    // TODO:DBから読み込む用にする
     public ArrayList<String> getCategoryList() {
+        // DBから読み込む
+        mCategoryList = mLocalAccess.fetchCategoryList();
         return mCategoryList;
     }
 
@@ -99,8 +114,8 @@ public class RegisterViewModel {
      * 保存ボタンの活性・非活性の切り替え
      */
     private void setSaveButtonState() {
-        if (mTitle.get() != null && mUserId.get() != null && mPassword.get() != null) {
-            if (mTitle.get().length() > 0 && mUserId.get().length() > 0 && mPassword.get().length() > 0) {
+        if (mCategory.get() != null && mTitle.get() != null && mUserId.get() != null && mPassword.get() != null) {
+            if (!mCategory.get().isEmpty() && mTitle.get().length() > 0 && mUserId.get().length() > 0 && mPassword.get().length() > 0) {
                 EventBus.getDefault().post(new ButtonEvent(ButtonEvent.saveButtonFlag, true));
             } else {
                 EventBus.getDefault().post(new ButtonEvent(ButtonEvent.saveButtonFlag, false));
@@ -130,7 +145,6 @@ public class RegisterViewModel {
             case R.id.activity_register_save_button:
                 Log.d(TAG, "Save Button Clicked");
                 // イベントにItemも渡して通知
-                // TODO:カテゴリーも取得できるように修正
                 Item item = new Item(mCategory.get(), mTitle.get(), mUserId.get(), mPassword.get(), mUrl.get(), null);
                 EventBus.getDefault().post(new TransitionEvent(TransitionEvent.TRANS_TO_HOME_FLAG, item));
                 break;
@@ -182,12 +196,16 @@ public class RegisterViewModel {
      * 保存
      */
     public void save(Item item) {
-        Log.d(TAG, "Category : " + item.getMCategory());
-        Log.d(TAG, "Title : " + item.getMTitle());
-        Log.d(TAG, "UserID : " + item.getMUserId());
-        Log.d(TAG, "Password : " + item.getMPassword());
-        Log.d(TAG, "URL : " + item.getMUrl());
-        Log.d(TAG, "ImagePath : " + item.getMImagePath());
+        com.io.tatsuki.randomer.Repositories.db.Item itemToDB = new com.io.tatsuki.randomer.Repositories.db.Item(
+                null,
+                item.getMCategory(),
+                item.getMTitle(),
+                item.getMUserId(),
+                item.getMPassword(),
+                item.getMUrl(),
+                item.getMImagePath()
+        );
+        mLocalAccess.save(itemToDB);
     }
 
     /**
