@@ -24,6 +24,9 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 登録画面のViewModel
  */
@@ -43,7 +46,12 @@ public class RegisterViewModel {
     public ObservableBoolean mUpperToggle = new ObservableBoolean();
     public ObservableBoolean mLowerToggle = new ObservableBoolean();
     public ObservableBoolean mSymbolToggle = new ObservableBoolean();
-    private long mKey;
+
+    @Getter
+    @Setter
+    private String mId;           // プライマリーキー
+
+    @Getter
     private List<String> mCategoryList;
     private Context mContext;
     private LocalAccess mLocalAccess;
@@ -84,18 +92,6 @@ public class RegisterViewModel {
 
     public void setPasswordLengthTitle() {
         mPasswordLengthTitle.set("パスワード桁数 : " + mPasswordLength.get());
-    }
-
-    public void setKey(long key) {
-        this.mKey = key;
-    }
-
-    public long getKey() {
-        return this.mKey;
-    }
-
-    public List<String> getCategoryList() {
-        return mCategoryList;
     }
 
     /**
@@ -173,8 +169,15 @@ public class RegisterViewModel {
             // 保存ボタン
             case R.id.activity_register_save_button:
                 Log.d(TAG, "Save Button Clicked");
+                Item item;
+                if (getMId() != null) {
+                    // 編集用
+                    item = new Item(Long.parseLong(getMId()), mCategory.get(), mTitle.get(), mUserId.get(), mPassword.get(), mUrl.get(), null);
+                } else {
+                    // 新規登録用
+                    item = new Item(null, mCategory.get(), mTitle.get(), mUserId.get(), mPassword.get(), mUrl.get(), null);
+                }
                 // イベントにItemも渡して通知
-                Item item = new Item(mKey, mCategory.get(), mTitle.get(), mUserId.get(), mPassword.get(), mUrl.get(), null);
                 EventBus.getDefault().post(new TransitionEvent(TransitionEvent.TRANS_TO_HOME_FLAG, item));
                 break;
             // 数字トグルボタン
