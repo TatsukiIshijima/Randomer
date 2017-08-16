@@ -125,10 +125,13 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 値の設定
+     */
     private void setValue() {
         Item item = getItem();
         if (item != null) {
-            // TODO:カテゴリーのセット
+            mBinding.activityRegisterSpinner.setSelection(mRegisterViewModel.getCategoryPosition(item.getCategory()));
             mRegisterViewModel.setTitle(item.getTitle());
             mRegisterViewModel.setUserId(item.getUsetId());
             mRegisterViewModel.setPassword(item.getPassword());

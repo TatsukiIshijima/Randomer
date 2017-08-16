@@ -9,6 +9,7 @@ import com.io.tatsuki.randomer.Repositories.db.Item;
 import com.io.tatsuki.randomer.Repositories.db.ItemDao;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 /**
@@ -75,12 +76,13 @@ public class LocalAccess {
      * @return categoryList
      */
     public List<String> fetchCategoryList() {
-        List<String> categoryList = new ArrayList<>();
+        List<String> duplicateCategoryList = new ArrayList<>();
         List<Item> categoryItemList = mItemDao.queryBuilder().orderDesc(ItemDao.Properties.Category).list();
-        // TODO:重複を外す
         for(Item item : categoryItemList) {
-            categoryList.add(item.getCategory());
+            duplicateCategoryList.add(item.getCategory());
         }
+        // 重複を外す
+        List<String> categoryList = new ArrayList<String>(new LinkedHashSet<>(duplicateCategoryList));
         return categoryList;
     }
 }

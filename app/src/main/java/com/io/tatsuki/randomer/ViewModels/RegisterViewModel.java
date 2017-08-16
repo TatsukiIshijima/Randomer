@@ -61,6 +61,21 @@ public class RegisterViewModel {
         mCategory.set(category);
     }
 
+    /**
+     * 編集時に登録されているカテゴリーの位置を取得
+     * @param category
+     * @return position
+     */
+    public int getCategoryPosition(String category) {
+        int position = -1;
+        for (int i=0; i<mCategoryList.size(); i++) {
+            if (mCategoryList.get(i).equals(category)) {
+                position = i;
+            }
+        }
+        return position;
+    }
+
     public void setTitle(String title) {
         mTitle.set(title);
     }
