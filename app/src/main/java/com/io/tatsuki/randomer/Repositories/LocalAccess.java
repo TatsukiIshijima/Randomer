@@ -45,8 +45,20 @@ public class LocalAccess {
         mItemDao.insert(item);
     }
 
+    /**
+     * データの削除
+     * @param item
+     */
     public void delete(Item item) {
         mItemDao.delete(item);
+    }
+
+    /**
+     * データの編集
+     * @param item
+     */
+    public void edit(Item item) {
+        mItemDao.update(item);
     }
 
     /**
