@@ -19,6 +19,7 @@ public class ItemViewModel {
 
     private List<Item> itemList;
     public ObservableField<String> title = new ObservableField<>();
+    public ObservableField<String> category = new ObservableField<>();
 
     public ItemViewModel(List<Item> items) {
         this.itemList = items;
@@ -30,5 +31,13 @@ public class ItemViewModel {
      */
     public void setItemTitle(Item item) {
         title.set(item.getTitle());
+    }
+
+    /**
+     * リストに表示するタイトルの設定
+     * @param item
+     */
+    public void setItemCategory(Item item) {
+        category.set("[ " + item.getCategory() + " ]");
     }
 }

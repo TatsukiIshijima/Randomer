@@ -96,6 +96,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
          */
         public void loadModel(Item item) {
             itemViewModel.setItemTitle(item);
+            itemViewModel.setItemCategory(item);
         }
     }
 }
