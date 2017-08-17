@@ -140,6 +140,7 @@ public class RegisterActivity extends AppCompatActivity {
             Item item = (Item) bundle.getSerializable(ITEM_KEY);
             // 遷移元のフラグを受け取る
             mFlag = bundle.getInt(EDIT_OR_SAVE_FLAG);
+            mRegisterViewModel.setMFlag(mFlag);
             return item;
         } else {
             return null;

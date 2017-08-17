@@ -51,6 +51,9 @@ public class RegisterViewModel {
     @Setter
     private String mId;           // プライマリーキー
 
+    @Setter
+    private int mFlag = 0;
+
     @Getter
     private List<String> mCategoryList;
     private Context mContext;
@@ -146,7 +149,12 @@ public class RegisterViewModel {
                 EventBus.getDefault().post(new ButtonEvent(ButtonEvent.saveButtonFlag, false));
             }
         } else {
-            EventBus.getDefault().post(new ButtonEvent(ButtonEvent.saveButtonFlag, false));
+            // 詳細画面からの遷移の場合、ボタンを活性状態に変更
+            if (mFlag == 1) {
+                EventBus.getDefault().post(new ButtonEvent(ButtonEvent.saveButtonFlag, true));
+            } else {
+                EventBus.getDefault().post(new ButtonEvent(ButtonEvent.saveButtonFlag, false));
+            }
         }
     }
 
