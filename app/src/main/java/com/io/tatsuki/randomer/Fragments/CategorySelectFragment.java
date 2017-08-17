@@ -2,6 +2,7 @@ package com.io.tatsuki.randomer.Fragments;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -15,6 +16,7 @@ import com.io.tatsuki.randomer.Events.TransitionEvent;
 
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.Repositories.db.Item;
+import com.io.tatsuki.randomer.Utils.ImageUtil;
 import com.io.tatsuki.randomer.ViewModels.RegisterViewModel;
 
 import org.greenrobot.eventbus.EventBus;
@@ -53,7 +55,7 @@ public class CategorySelectFragment extends DialogFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.d(TAG, "onItemClick : " + i);
                 // ImagePathの取得
-                item.setImagePath("path" + i);
+                item.setImagePath(ImageUtil.convertUrlFromDrawableResId(getActivity(), CategoryItemAdapter.mResourceList[i]));
 
                 // 詳細画面からであれば更新
                 if (mFlag == 1) {

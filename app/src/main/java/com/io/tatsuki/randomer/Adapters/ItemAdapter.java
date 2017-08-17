@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.io.tatsuki.randomer.Events.TransitionEvent;
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.Repositories.db.Item;
+import com.io.tatsuki.randomer.Utils.ImageUtil;
 import com.io.tatsuki.randomer.ViewModels.ItemViewModel;
 import com.io.tatsuki.randomer.databinding.ItemBinding;
 
@@ -55,6 +56,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         final Item item = getItemAt(holder.getLayoutPosition());
         holder.loadModel(item);
+        // 画像のセット
+        ImageUtil.setImage(mContext, item.getImagePath(), mBinding.itemImageView);
         // クリックイベント
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +99,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
          */
         public void loadModel(Item item) {
             itemViewModel.setItemTitle(item);
+            itemViewModel.setItemCategory(item);
         }
     }
 }
