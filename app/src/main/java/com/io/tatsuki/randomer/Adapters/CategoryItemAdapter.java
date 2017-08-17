@@ -22,22 +22,22 @@ public class CategoryItemAdapter extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private int[] mResourceList = new int[]{ R.drawable.ic_airplane,
-            R.drawable.ic_car,
-            R.drawable.ic_cloud,
-            R.drawable.ic_food,
-            R.drawable.ic_internet,
-            R.drawable.ic_mail,
-            R.drawable.ic_map,
-            R.drawable.ic_music,
-            R.drawable.ic_pc,
-            R.drawable.ic_photo,
-            R.drawable.ic_setting,
-            R.drawable.ic_share,
-            R.drawable.ic_shopping,
-            R.drawable.ic_track,
-            R.drawable.ic_train,
-            R.drawable.ic_other};
+    public static final int[] mResourceList = new int[]{ R.drawable.ic_airplane,
+                                                         R.drawable.ic_car,
+                                                         R.drawable.ic_cloud,
+                                                         R.drawable.ic_food,
+                                                         R.drawable.ic_internet,
+                                                         R.drawable.ic_mail,
+                                                         R.drawable.ic_map,
+                                                         R.drawable.ic_music,
+                                                         R.drawable.ic_pc,
+                                                         R.drawable.ic_photo,
+                                                         R.drawable.ic_setting,
+                                                         R.drawable.ic_share,
+                                                         R.drawable.ic_shopping,
+                                                         R.drawable.ic_track,
+                                                         R.drawable.ic_train,
+                                                         R.drawable.ic_other };
 
 
     public CategoryItemAdapter(Context context) {
