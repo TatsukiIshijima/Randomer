@@ -19,4 +19,8 @@
         <item name="android:splitMotionEvents">false</item>
     </style>
 
+    <style name="CustomCheckBoxStyle" parent="android:Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/custom_checkbox_style</item>
+    </style>
+
 </resources>
