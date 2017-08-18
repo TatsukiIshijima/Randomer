@@ -27,12 +27,13 @@ import com.io.tatsuki.randomer.databinding.ActivityHomeBinding;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *  ホーム画面
  */
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
     private static final String ITEM_KEY = "ITEM_KEY_HOME";
@@ -112,7 +113,7 @@ public class HomeActivity extends AppCompatActivity {
                 break;
         }
     }
-
+    /*
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -120,7 +121,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // SearchView
         SearchView mSearchView = (SearchView) mBinding.activityHomeToolbar.getMenu().findItem(R.id.menu_action_search).getActionView();
-        mSearchView.setOnQueryTextListener(mHomeViewModel.queryTextListener());
+        mSearchView.setOnQueryTextListener(this);
         return true;
     }
 
@@ -128,10 +129,11 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_action_search:
-                return true;
+                return false;
         }
         return super.onOptionsItemSelected(item);
     }
+    */
 
     private void getItem() {
         Bundle bundle = getIntent().getExtras();
@@ -148,6 +150,7 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(mBinding.activityHomeToolbar);
 
         // NavigationDrawer
+        /*
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
                                                                mBinding.activityHomeDrawerLayout,
                                                                  mBinding.activityHomeToolbar,
@@ -156,6 +159,7 @@ public class HomeActivity extends AppCompatActivity {
         mBinding.activityHomeDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         mBinding.activityHomeNavigation.setNavigationItemSelectedListener(mHomeViewModel.itemSelectedListener());
+        */
     }
 
     /**
@@ -164,7 +168,7 @@ public class HomeActivity extends AppCompatActivity {
     private void setListAndAdapter() {
         mBinding.activityHomeRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mItemAdapter = new ItemAdapter(getApplicationContext());
-        mItemAdapter.setItemList(mHomeViewModel.getItemList());
+        mItemAdapter.setItemList(mItemList);
         mBinding.activityHomeRecyclerView.setAdapter(mItemAdapter);
     }
 
@@ -172,8 +176,18 @@ public class HomeActivity extends AppCompatActivity {
      * アダプターの更新
      */
     private void updateAdapter() {
+        // 更新のためDBからのリストを読み込む
         mItemAdapter.setItemList(mHomeViewModel.getItemList());
         mItemAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * アダプターのクリア
+     */
+    private void clearAdapter() {
+        int size = mItemList.size();
+        mItemList.clear();
+        mItemAdapter.notifyItemRangeRemoved(0, size);
     }
 
     /**
@@ -194,5 +208,18 @@ public class HomeActivity extends AppCompatActivity {
             default:
                 break;
         }
+    }
+
+    /**
+     * 検索テキストイベント
+     */
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
 }

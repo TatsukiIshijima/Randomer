@@ -53,26 +53,6 @@ public class HomeViewModel {
     }
 
     /**
-     * 検索テキストイベント
-     */
-    public SearchView.OnQueryTextListener queryTextListener() {
-        SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Log.d(TAG, "onQueryTextSubmit : " + query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                Log.d(TAG, "onQueryTextChange : " + newText);
-                return false;
-            }
-        };
-        return queryTextListener;
-    };
-
-    /**
      * ナビゲーション内メニューイベント
      */
     public NavigationView.OnNavigationItemSelectedListener itemSelectedListener() {
