@@ -433,7 +433,7 @@
                         android:layout_marginBottom="32dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
-                        android:background="@drawable/custom_button_style"
+                        android:background="@drawable/custom_button_ripple"
                         android:text="生成"
                         android:onClick="@{registerViewModel::onClickButton}"/>
 
@@ -444,7 +444,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginBottom="32dp"
-                        android:background="@drawable/custom_button_style"
+                        android:background="@drawable/custom_button_ripple"
                         android:text="保存"
                         android:onClick="@{registerViewModel::onClickButton}"/>
 
