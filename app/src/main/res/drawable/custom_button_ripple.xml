@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- ボタンのためのリップルエフェクト設定 -->
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="@color/colorWhite.focused">
+    android:color="?attr/colorControlHighlight">
 
     <item android:drawable="@drawable/custom_button_style"></item>
 
