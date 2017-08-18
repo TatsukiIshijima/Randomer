@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.io.tatsuki.randomer.Events.TransitionEvent;
 
@@ -66,7 +68,7 @@ public class DetailActivity extends AppCompatActivity {
 
         getItem();
         showMessage();
-        mDetailViewModel = new DetailViewModel(this, mItem);
+        mDetailViewModel = new DetailViewModel(this, mBinding, mItem);
         mBinding.setDetailViewModel(mDetailViewModel);
 
         setViews();
@@ -90,12 +92,30 @@ public class DetailActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        boolean result = true;
+
+        switch (id) {
+            case android.R.id.home:
+                finish();
+                break;
+            default:
+                result = super.onOptionsItemSelected(item);
+        }
+        return result;
+    }
+
     /**
      * 各Viewの設定
      */
     private void setViews() {
         // Toolbar
         setSupportActionBar(mBinding.activityDetailToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     /**
@@ -156,6 +176,16 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     /**
+     * 指定したURLを開く
+     * @param url
+     */
+    public void openWebPage(String url) {
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
+
+    /**
      * 画面遷移のためのイベント講読
      * @param event
      */
@@ -169,6 +199,10 @@ public class DetailActivity extends AppCompatActivity {
             case TransitionEvent.TRANS_TO_HOME_FLAG:
                 showDeleteAlert();
                 break;
+            case TransitionEvent.TRANS_TO_WEB_FLAG:
+                if (event.getItem().getUrl() != null) {
+                    openWebPage(event.getItem().getUrl());
+                }
             default:
                 break;
         }

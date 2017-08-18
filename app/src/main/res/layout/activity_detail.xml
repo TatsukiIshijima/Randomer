@@ -246,12 +246,20 @@
                                 android:maxLines="1"
                                 android:ellipsize="end"/>
 
-                            <CheckBox
-                                android:id="@+id/activity_detail_check_box"
+                            <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.1"
-                                android:gravity="center"/>
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.2"
+                                android:orientation="vertical">
+
+                                <CheckBox
+                                    android:id="@+id/activity_detail_check_box"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:onClick="@{detailViewModel::onClickButton}"
+                                    style="@style/CustomCheckBoxStyle" />
+                            </LinearLayout>
 
                         </LinearLayout>
 
@@ -271,7 +279,10 @@
                                 android:textSize="20sp"
                                 android:inputType="textUri"
                                 android:maxLines="1"
-                                android:ellipsize="end"/>
+                                android:autoLink="web"
+                                android:ellipsize="end"
+                                android:clickable="true"
+                                android:onClick="@{detailViewModel::onClickButton}"/>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -291,7 +302,7 @@
                         android:layout_marginBottom="16dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
-                        android:background="@drawable/custom_button_style"
+                        android:background="@drawable/custom_button_ripple"
                         android:text="編集"
                         android:onClick="@{detailViewModel::onClickButton}"/>
 
@@ -302,7 +313,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginBottom="16dp"
-                        android:background="@drawable/custom_button_style"
+                        android:background="@drawable/custom_button_ripple"
                         android:text="削除"
                         android:onClick="@{detailViewModel::onClickButton}"/>
 

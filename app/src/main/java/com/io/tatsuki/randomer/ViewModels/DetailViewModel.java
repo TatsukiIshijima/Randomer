@@ -1,7 +1,10 @@
 package com.io.tatsuki.randomer.ViewModels;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.ObservableField;
+import android.net.Uri;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 
@@ -10,6 +13,7 @@ import com.io.tatsuki.randomer.Events.TransitionEvent;
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.Repositories.LocalAccess;
 import com.io.tatsuki.randomer.Repositories.db.Item;
+import com.io.tatsuki.randomer.databinding.ActivityDetailBinding;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -27,11 +31,13 @@ public class DetailViewModel {
     public ObservableField<String> mPassword = new ObservableField<>();
     public ObservableField<String> mUrl = new ObservableField<>();
     private Context mContext;
+    private ActivityDetailBinding mBinding;
     private Item mItem;
     private LocalAccess mLocalAccess;
 
-    public DetailViewModel(Context context, Item item) {
+    public DetailViewModel(Context context, ActivityDetailBinding binding, Item item) {
         this.mContext = context;
+        this.mBinding = binding;
         this.mItem = item;
         mLocalAccess = new LocalAccess(context);
         mLocalAccess.setupDB();
@@ -75,6 +81,16 @@ public class DetailViewModel {
                 // ホーム画面に遷移
                 EventBus.getDefault().post(new TransitionEvent(TransitionEvent.TRANS_TO_HOME_FLAG));
                 break;
+            // URLテキスト
+            case R.id.activity_detail_url_text:
+                Log.d(TAG, "URL Clicked");
+                EventBus.getDefault().post(new TransitionEvent(TransitionEvent.TRANS_TO_WEB_FLAG, mItem));
+                break;
+            // チェックボタン
+            case R.id.activity_detail_check_box:
+                Log.d(TAG, "Check Box Clicked");
+                setPasswordVisible();
+                break;
         }
     }
 
@@ -83,5 +99,16 @@ public class DetailViewModel {
      */
     public void delete(Item item) {
         mLocalAccess.delete(item);
+    }
+
+    /**
+     * パスワードの表示非表示の切り替え
+     */
+    public void setPasswordVisible() {
+        if (mBinding.activityDetailCheckBox.isChecked()) {
+            mBinding.activityDetailPasswordText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        } else {
+            mBinding.activityDetailPasswordText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        }
     }
 }
