@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.ObservableField;
 import android.net.Uri;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 
@@ -12,6 +13,7 @@ import com.io.tatsuki.randomer.Events.TransitionEvent;
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.Repositories.LocalAccess;
 import com.io.tatsuki.randomer.Repositories.db.Item;
+import com.io.tatsuki.randomer.databinding.ActivityDetailBinding;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -29,11 +31,13 @@ public class DetailViewModel {
     public ObservableField<String> mPassword = new ObservableField<>();
     public ObservableField<String> mUrl = new ObservableField<>();
     private Context mContext;
+    private ActivityDetailBinding mBinding;
     private Item mItem;
     private LocalAccess mLocalAccess;
 
-    public DetailViewModel(Context context, Item item) {
+    public DetailViewModel(Context context, ActivityDetailBinding binding, Item item) {
         this.mContext = context;
+        this.mBinding = binding;
         this.mItem = item;
         mLocalAccess = new LocalAccess(context);
         mLocalAccess.setupDB();
@@ -84,6 +88,11 @@ public class DetailViewModel {
                     openWebPage(mUrl.get());
                 }
                 break;
+            // チェックボタン
+            case R.id.activity_detail_check_box:
+                Log.d(TAG, "Check Box Clicked");
+                setPasswordVisible();
+                break;
         }
     }
 
@@ -102,5 +111,16 @@ public class DetailViewModel {
         Uri uri = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         mContext.startActivity(intent);
+    }
+
+    /**
+     * パスワードの表示非表示の切り替え
+     */
+    public void setPasswordVisible() {
+        if (mBinding.activityDetailCheckBox.isChecked()) {
+            mBinding.activityDetailPasswordText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        } else {
+            mBinding.activityDetailPasswordText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        }
     }
 }

@@ -67,7 +67,7 @@ public class DetailActivity extends AppCompatActivity {
 
         getItem();
         showMessage();
-        mDetailViewModel = new DetailViewModel(this, mItem);
+        mDetailViewModel = new DetailViewModel(this, mBinding, mItem);
         mBinding.setDetailViewModel(mDetailViewModel);
 
         setViews();
