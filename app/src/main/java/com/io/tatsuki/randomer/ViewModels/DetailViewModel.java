@@ -84,9 +84,7 @@ public class DetailViewModel {
             // URLテキスト
             case R.id.activity_detail_url_text:
                 Log.d(TAG, "URL Clicked");
-                if (mUrl.get() != null) {
-                    openWebPage(mUrl.get());
-                }
+                EventBus.getDefault().post(new TransitionEvent(TransitionEvent.TRANS_TO_WEB_FLAG, mItem));
                 break;
             // チェックボタン
             case R.id.activity_detail_check_box:
@@ -101,16 +99,6 @@ public class DetailViewModel {
      */
     public void delete(Item item) {
         mLocalAccess.delete(item);
-    }
-
-    /**
-     * 指定したURLを開く
-     * @param url
-     */
-    public void openWebPage(String url) {
-        Uri uri = Uri.parse(url);
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        mContext.startActivity(intent);
     }
 
     /**
