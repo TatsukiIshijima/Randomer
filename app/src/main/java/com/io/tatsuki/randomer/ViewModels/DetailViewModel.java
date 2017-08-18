@@ -1,7 +1,9 @@
 package com.io.tatsuki.randomer.ViewModels;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.ObservableField;
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 
@@ -75,6 +77,13 @@ public class DetailViewModel {
                 // ホーム画面に遷移
                 EventBus.getDefault().post(new TransitionEvent(TransitionEvent.TRANS_TO_HOME_FLAG));
                 break;
+            // URLテキスト
+            case R.id.activity_detail_url_text:
+                Log.d(TAG, "URL Clicked");
+                if (mUrl.get() != null) {
+                    openWebPage(mUrl.get());
+                }
+                break;
         }
     }
 
@@ -83,5 +92,15 @@ public class DetailViewModel {
      */
     public void delete(Item item) {
         mLocalAccess.delete(item);
+    }
+
+    /**
+     * 指定したURLを開く
+     * @param url
+     */
+    public void openWebPage(String url) {
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        mContext.startActivity(intent);
     }
 }

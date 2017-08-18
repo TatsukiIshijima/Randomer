@@ -271,7 +271,10 @@
                                 android:textSize="20sp"
                                 android:inputType="textUri"
                                 android:maxLines="1"
-                                android:ellipsize="end"/>
+                                android:autoLink="web"
+                                android:ellipsize="end"
+                                android:clickable="true"
+                                android:onClick="@{detailViewModel::onClickButton}"/>
                         </LinearLayout>
 
                     </LinearLayout>
