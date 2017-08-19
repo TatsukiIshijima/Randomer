@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "610704657066",
+    "firebase_url": "https://randomer-4ed7b.firebaseio.com",
+    "project_id": "randomer-4ed7b",
+    "storage_bucket": "randomer-4ed7b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:610704657066:android:f5326c331fbc7d98",
+        "android_client_info": {
+          "package_name": "com.io.tatsuki.randomer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "610704657066-po7ukipc3b1c462fms4su2va4lunl8eo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-DH3alw9ZckVmElmyYO8zlvPnxbfea5M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
