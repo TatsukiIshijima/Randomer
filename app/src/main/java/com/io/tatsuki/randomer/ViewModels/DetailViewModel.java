@@ -13,6 +13,7 @@ import com.io.tatsuki.randomer.Events.TransitionEvent;
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.Repositories.LocalAccess;
 import com.io.tatsuki.randomer.Repositories.db.Item;
+import com.io.tatsuki.randomer.Utils.EncryptUtil;
 import com.io.tatsuki.randomer.databinding.ActivityDetailBinding;
 
 import org.greenrobot.eventbus.EventBus;
@@ -56,7 +57,7 @@ public class DetailViewModel {
     }
 
     public void setPassword() {
-        mPassword.set(mItem.getPassword());
+        mPassword.set(EncryptUtil.decryptRSA(mContext, mItem.getPassword()));
     }
 
     public void setUrl() {

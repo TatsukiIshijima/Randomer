@@ -18,6 +18,7 @@ import com.io.tatsuki.randomer.Events.TransitionEvent;
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.Repositories.LocalAccess;
 import com.io.tatsuki.randomer.Repositories.db.Item;
+import com.io.tatsuki.randomer.Utils.EncryptUtil;
 import com.io.tatsuki.randomer.Utils.GenerateUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -82,7 +83,7 @@ public class RegisterViewModel {
     }
 
     public void setPassword(String password) {
-        mPassword.set(password);
+        mPassword.set(EncryptUtil.decryptRSA(mContext, password));
     }
 
     public void setUrl(String url) {
