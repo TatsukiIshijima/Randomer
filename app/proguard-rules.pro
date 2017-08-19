@@ -49,14 +49,13 @@
  # picasso
  -dontwarn com.squareup.okhttp.**
 
- # greenDao
- -keepattributes *Annotation*
- -keepclassmembers class ** {
-     @org.greenrobot.eventbus.Subscribe <methods>;
+ ### greenDAO 3
+ -keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+ public static java.lang.String TABLENAME;
  }
- -keep enum org.greenrobot.eventbus.ThreadMode { *; }
+ -keep class **$Properties
 
- # Only required if you use AsyncExecutor
- -keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
-     <init>(java.lang.Throwable);
- }
+ # If you do not use SQLCipher:
+ -dontwarn org.greenrobot.greendao.database.**
+ # If you do not use RxJava:
+ -dontwarn rx.**
