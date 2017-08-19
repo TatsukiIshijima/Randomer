@@ -16,6 +16,7 @@ import com.io.tatsuki.randomer.Events.TransitionEvent;
 
 import com.io.tatsuki.randomer.R;
 import com.io.tatsuki.randomer.Repositories.db.Item;
+import com.io.tatsuki.randomer.Utils.EncryptUtil;
 import com.io.tatsuki.randomer.Utils.ImageUtil;
 import com.io.tatsuki.randomer.ViewModels.RegisterViewModel;
 
@@ -56,6 +57,10 @@ public class CategorySelectFragment extends DialogFragment {
                 Log.d(TAG, "onItemClick : " + i);
                 // ImagePathの取得
                 item.setImagePath(ImageUtil.convertUrlFromDrawableResId(getActivity(), CategoryItemAdapter.mResourceList[i]));
+                // パスワードの暗号化
+                String encryptPass = EncryptUtil.encryptRSA(getActivity(), item.getPassword());
+                item.setPassword(encryptPass);
+                Log.d(TAG, "EncryptPassword : " + encryptPass);
 
                 // 詳細画面からであれば更新
                 if (mFlag == 1) {
