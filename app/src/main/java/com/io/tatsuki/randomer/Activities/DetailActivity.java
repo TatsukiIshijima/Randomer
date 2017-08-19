@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.google.android.gms.ads.AdRequest;
 import com.io.tatsuki.randomer.Events.TransitionEvent;
 
 import com.io.tatsuki.randomer.R;
@@ -73,23 +74,33 @@ public class DetailActivity extends AppCompatActivity {
 
         setViews();
         setValue();
+        initAdMod();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         EventBus.getDefault().register(this);
+        if (mBinding.activityDetailAdView != null) {
+            mBinding.activityDetailAdView.resume();
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
         EventBus.getDefault().unregister(this);
+        if (mBinding.activityDetailAdView != null) {
+            mBinding.activityDetailAdView.pause();
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (mBinding.activityDetailAdView != null) {
+            mBinding.activityDetailAdView.destroy();
+        }
     }
 
     @Override
@@ -106,6 +117,14 @@ public class DetailActivity extends AppCompatActivity {
                 result = super.onOptionsItemSelected(item);
         }
         return result;
+    }
+
+    /**
+     * 広告表示の初期化
+     */
+    private void initAdMod() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mBinding.activityDetailAdView.loadAd(adRequest);
     }
 
     /**
