@@ -135,6 +135,7 @@ public class RegisterActivity extends AppCompatActivity {
         mBinding.activityRegisterTitleEdit.addTextChangedListener(mRegisterViewModel.textChangeLister());
         mBinding.activityRegisterUserIdEdit.addTextChangedListener(mRegisterViewModel.textChangeLister());
         mBinding.activityRegisterPasswordEdit.addTextChangedListener(mRegisterViewModel.textChangeLister());
+        mBinding.activityRegisterPasswordEdit.setOnKeyListener(mRegisterViewModel.onKeyListener());
         // SeekBar
         mRegisterViewModel.setPasswordLength(8);
         mRegisterViewModel.setPasswordLengthTitle();

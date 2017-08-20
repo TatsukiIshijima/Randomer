@@ -7,6 +7,7 @@ import android.databinding.ObservableInt;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.SeekBar;
@@ -20,6 +21,7 @@ import com.io.tatsuki.randomer.Repositories.LocalAccess;
 import com.io.tatsuki.randomer.Repositories.db.Item;
 import com.io.tatsuki.randomer.Utils.EncryptUtil;
 import com.io.tatsuki.randomer.Utils.GenerateUtil;
+import com.io.tatsuki.randomer.Utils.KeyboardUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -247,6 +249,29 @@ public class RegisterViewModel {
      */
     public void update(Item item) {
         mLocalAccess.update(item);
+    }
+
+    /**
+     * キーイベント
+     * @return
+     */
+    public View.OnKeyListener onKeyListener() {
+        View.OnKeyListener keyListener = new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+                switch (view.getId()) {
+                    case R.id.activity_register_password_edit:
+                        if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                            //キーボードを閉じる
+                            KeyboardUtil.hideKeyboard(mContext, view);
+                            return true;
+                        }
+                        break;
+                }
+                return false;
+            }
+        };
+        return keyListener;
     }
 
     /**
