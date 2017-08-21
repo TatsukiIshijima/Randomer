@@ -75,6 +75,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
+                                android:textSize="12sp"
                                 android:text="Category"/>
 
                         </LinearLayout>
@@ -98,7 +99,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:text="Title"/>
+                                android:text="Title"
+                                android:textSize="12sp"/>
 
                         </LinearLayout>
 
@@ -121,7 +123,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:text="User ID"/>
+                                android:text="User ID"
+                                android:textSize="12sp"/>
 
                         </LinearLayout>
 
@@ -144,7 +147,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:text="URL"/>
+                                android:text="URL"
+                                android:textSize="12sp"/>
 
                         </LinearLayout>
 
@@ -167,7 +171,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:text="Password"/>
+                                android:text="Password"
+                                android:textSize="12sp"/>
 
                         </LinearLayout>
 
@@ -223,7 +228,8 @@
                                     android:layout_height="match_parent"
                                     android:hint="＊入力必須"
                                     android:inputType="text"
-                                    android:text="@={registerViewModel.mTitle}"/>
+                                    android:text="@={registerViewModel.mTitle}"
+                                    android:textSize="16sp"/>
                             </android.support.design.widget.TextInputLayout>
 
                         </LinearLayout>
@@ -247,7 +253,8 @@
                                     android:layout_height="match_parent"
                                     android:hint="＊入力必須"
                                     android:inputType="text"
-                                    android:text="@={registerViewModel.mUserId}"/>
+                                    android:text="@={registerViewModel.mUserId}"
+                                    android:textSize="16sp"/>
                             </android.support.design.widget.TextInputLayout>
 
                         </LinearLayout>
@@ -271,7 +278,8 @@
                                     android:layout_height="match_parent"
                                     android:hint="任意"
                                     android:inputType="text"
-                                    android:text="@={registerViewModel.mUrl}"/>
+                                    android:text="@={registerViewModel.mUrl}"
+                                    android:textSize="16sp"/>
                             </android.support.design.widget.TextInputLayout>
 
                         </LinearLayout>
@@ -296,7 +304,8 @@
                                     android:layout_height="match_parent"
                                     android:hint="＊入力必須"
                                     android:inputType="textPassword"
-                                    android:text="@={registerViewModel.mPassword}"/>
+                                    android:text="@={registerViewModel.mPassword}"
+                                    android:textSize="16sp"/>
                             </android.support.design.widget.TextInputLayout>
 
                         </LinearLayout>
