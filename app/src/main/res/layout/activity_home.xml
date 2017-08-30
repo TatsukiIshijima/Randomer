@@ -1,18 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.io.tatsuki.randomer.Activities.HomeActivity">
+    xmlns:tools="http://schemas.android.com/tools">
+    
+    <data>
+        <variable
+            name="homeViewModel"
+            type="com.io.tatsuki.randomer.ViewModels.HomeViewModel"/>
+    </data>
+    
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/activity_home_drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusableInTouchMode="true"
+        tools:context="com.io.tatsuki.randomer.Activities.HomeActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/activity_home_coordinate_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="com.io.tatsuki.toney.Activities.HomeActivity">
 
-</android.support.constraint.ConstraintLayout>
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.AppBarOverlay">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/activity_home_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:popupTheme="@style/AppTheme.PopupOverlay"
+                    app:layout_scrollFlags="scroll|enterAlways">
+                </android.support.v7.widget.Toolbar>
+
+            </android.support.design.widget.AppBarLayout>
+
+            <!-- Main Layout -->
+            <FrameLayout
+                android:id="@+id/activity_home_frame_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/activity_home_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </android.support.v7.widget.RecyclerView>
+
+                <LinearLayout
+                    android:id="@+id/activity_home_message_linear_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="登録されてません。"
+                        android:layout_gravity="center_horizontal"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="右下の「＋」ボタンから登録できます。"/>
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/activity_home_fb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="16dp"
+                android:src="@android:drawable/ic_input_add"
+                android:onClick="@{homeViewModel::onClickButton}">
+            </android.support.design.widget.FloatingActionButton>
+
+        </android.support.design.widget.CoordinatorLayout>
+
+        <!-- Menu Layout (Navigation)-->
+        <android.support.design.widget.NavigationView
+            android:id="@+id/activity_home_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@android:color/white"
+            app:headerLayout="@layout/navigation_drawer_header"
+            app:menu="@menu/navigation_menu">
+        </android.support.design.widget.NavigationView>
+
+    </android.support.v4.widget.DrawerLayout>
+</layout>
