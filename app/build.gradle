@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'test'
+            keyPassword '096574'
+            storeFile file('/Users/TatsukiIshijima/AndroidStudioProjects/Randomer/app/keystore/release.jks')
+            storePassword '096574'
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
     defaultConfig {
@@ -16,6 +24,9 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             proguardFile '/Users/TatsukiIshijima/Library/Android/sdk/tools/proguard/proguard-android-optimize.txt'
+            signingConfig signingConfigs.config
+        }
+        buildType {
         }
     }
     dataBinding {

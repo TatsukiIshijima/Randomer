@@ -40,12 +40,38 @@
             </android.support.design.widget.AppBarLayout>
 
             <!-- Main Layout -->
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/activity_home_recycler_view"
+            <FrameLayout
+                android:id="@+id/activity_home_frame_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
-            </android.support.v7.widget.RecyclerView>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/activity_home_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </android.support.v7.widget.RecyclerView>
+
+                <LinearLayout
+                    android:id="@+id/activity_home_message_linear_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="登録されてません。"
+                        android:layout_gravity="center_horizontal"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="右下の「＋」ボタンから登録できます。"/>
+                </LinearLayout>
+
+            </FrameLayout>
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/activity_home_fb"

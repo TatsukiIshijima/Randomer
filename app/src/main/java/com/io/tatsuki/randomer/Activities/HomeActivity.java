@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.io.tatsuki.randomer.Adapters.ItemAdapter;
 import com.io.tatsuki.randomer.Events.TransitionEvent;
@@ -167,6 +168,13 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
      */
     private void setListAndAdapter() {
         mBinding.activityHomeRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        if (mItemList.size() == 0) {
+            mBinding.activityHomeRecyclerView.setVisibility(View.INVISIBLE);
+            mBinding.activityHomeMessageLinearLayout.setVisibility(View.VISIBLE);
+        } else {
+            mBinding.activityHomeRecyclerView.setVisibility(View.VISIBLE);
+            mBinding.activityHomeMessageLinearLayout.setVisibility(View.INVISIBLE);
+        }
         mItemAdapter = new ItemAdapter(getApplicationContext());
         mItemAdapter.setItemList(mItemList);
         mBinding.activityHomeRecyclerView.setAdapter(mItemAdapter);
@@ -177,6 +185,13 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
      */
     private void updateAdapter() {
         // 更新のためDBからのリストを読み込む
+        if (mHomeViewModel.getItemList().size() == 0) {
+            mBinding.activityHomeRecyclerView.setVisibility(View.INVISIBLE);
+            mBinding.activityHomeMessageLinearLayout.setVisibility(View.VISIBLE);
+        } else {
+            mBinding.activityHomeRecyclerView.setVisibility(View.VISIBLE);
+            mBinding.activityHomeMessageLinearLayout.setVisibility(View.INVISIBLE);
+        }
         mItemAdapter.setItemList(mHomeViewModel.getItemList());
         mItemAdapter.notifyDataSetChanged();
     }
